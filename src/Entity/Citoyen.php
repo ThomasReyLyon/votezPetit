@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,43 +19,31 @@ class Citoyen
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $prenom;
+    private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $prenom;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $numElecteur;
+    private $numeroElecteur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Demandes", mappedBy="citoyen")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $demandes;
+    private $nombreVotes;
 
-    public function __construct()
-    {
-        $this->demandes = new ArrayCollection();
-    }
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nombrePropositions;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
     }
 
     public function getNom(): ?string
@@ -72,45 +58,50 @@ class Citoyen
         return $this;
     }
 
-    public function getNumElecteur(): ?int
+    public function getPrenom(): ?string
     {
-        return $this->numElecteur;
+        return $this->prenom;
     }
 
-    public function setNumElecteur(?int $numElecteur): self
+    public function setPrenom(string $prenom): self
     {
-        $this->numElecteur = $numElecteur;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Demandes[]
-     */
-    public function getDemandes(): Collection
+    public function getNumeroElecteur(): ?int
     {
-        return $this->demandes;
+        return $this->numeroElecteur;
     }
 
-    public function addDemande(Demandes $demande): self
+    public function setNumeroElecteur(?int $numeroElecteur): self
     {
-        if (!$this->demandes->contains($demande)) {
-            $this->demandes[] = $demande;
-            $demande->setCitoyen($this);
-        }
+        $this->numeroElecteur = $numeroElecteur;
 
         return $this;
     }
 
-    public function removeDemande(Demandes $demande): self
+    public function getNombreVotes(): ?int
     {
-        if ($this->demandes->contains($demande)) {
-            $this->demandes->removeElement($demande);
-            // set the owning side to null (unless already changed)
-            if ($demande->getCitoyen() === $this) {
-                $demande->setCitoyen(null);
-            }
-        }
+        return $this->nombreVotes;
+    }
+
+    public function setNombreVotes(?int $nombreVotes): self
+    {
+        $this->nombreVotes = $nombreVotes;
+
+        return $this;
+    }
+
+    public function getNombrePropositions(): ?int
+    {
+        return $this->nombrePropositions;
+    }
+
+    public function setNombrePropositions(?int $nombrePropositions): self
+    {
+        $this->nombrePropositions = $nombrePropositions;
 
         return $this;
     }
