@@ -23,7 +23,7 @@
 
       for ($i=0; $i < 500; $i++) {
         $citoyen = new Citoyen();
-        $citoyen->setNom($faker->name);
+        $citoyen->setNom($faker->lastName);
         $citoyen->setPrenom($faker->firstName);
         $citoyen->setNumeroElecteur($faker->ean8);
         $citoyen->setNombreVotes($faker->randomDigitNotNull);
