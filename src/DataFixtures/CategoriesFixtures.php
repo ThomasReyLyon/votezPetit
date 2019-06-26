@@ -23,6 +23,8 @@ class CategoriesFixtures extends Fixture
         }
 
         $manager->flush();
+
+        $this->addReference('categories', $categories);
     }
 }
 

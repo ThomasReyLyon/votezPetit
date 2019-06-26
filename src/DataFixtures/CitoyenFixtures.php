@@ -33,6 +33,8 @@ class CitoyenFixtures extends Fixture
 
         }
         $manager->flush();
+
+        $this->addReference('citoyen', $citoyen);
     }
 
 
