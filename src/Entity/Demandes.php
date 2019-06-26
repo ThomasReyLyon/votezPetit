@@ -36,6 +36,11 @@ class Demandes
      */
     private $citoyen;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isOuverte;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class Demandes
     public function setCitoyen(?Citoyen $citoyen): self
     {
         $this->citoyen = $citoyen;
+
+        return $this;
+    }
+
+    public function getIsOuverte(): ?bool
+    {
+        return $this->isOuverte;
+    }
+
+    public function setIsOuverte(bool $isOuverte): self
+    {
+        $this->isOuverte = $isOuverte;
 
         return $this;
     }
