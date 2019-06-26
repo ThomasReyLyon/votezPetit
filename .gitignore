@@ -7,7 +7,6 @@
 /var/
 /vendor/
 /.idea/
-/.idea/workspace.xml/
 
 ###< symfony/framework-bundle ###
 
