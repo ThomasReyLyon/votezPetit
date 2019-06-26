@@ -7,7 +7,6 @@
 /var/
 /vendor/
 /.idea/
-/.idea/workspace.xml/
 
 ###< symfony/framework-bundle ###
 
@@ -19,3 +18,10 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
