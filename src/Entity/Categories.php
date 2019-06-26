@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +23,16 @@ class Categories
      */
     private $nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Demandes", mappedBy="categorie")
+     */
+    private $demandes;
+
+    public function __construct()
+    {
+        $this->demandes = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +46,37 @@ class Categories
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Demandes[]
+     */
+    public function getDemandes(): Collection
+    {
+        return $this->demandes;
+    }
+
+    public function addDemande(Demandes $demande): self
+    {
+        if (!$this->demandes->contains($demande)) {
+            $this->demandes[] = $demande;
+            $demande->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemande(Demandes $demande): self
+    {
+        if ($this->demandes->contains($demande)) {
+            $this->demandes->removeElement($demande);
+            // set the owning side to null (unless already changed)
+            if ($demande->getCategorie() === $this) {
+                $demande->setCategorie(null);
+            }
+        }
 
         return $this;
     }

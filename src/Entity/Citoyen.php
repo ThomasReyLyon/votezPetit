@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,6 +42,31 @@ class Citoyen
      * @ORM\Column(type="integer", nullable=true)
      */
     private $nombrePropositions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Demandes", mappedBy="createur")
+     */
+    private $demandesCreated;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Demandes", mappedBy="voteurs")
+     */
+    private $aVote;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="citoyen")
+     */
+    private $votes;
+
+    public function __construct()
+    {
+        $this->demandesCreated = new ArrayCollection();
+        $this->aVote = new ArrayCollection();
+        $this->aVotePour = new ArrayCollection();
+        $this->aVoteContre = new ArrayCollection();
+        $this->aVoteAbstention = new ArrayCollection();
+        $this->votes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,4 +132,96 @@ class Citoyen
 
         return $this;
     }
+
+    /**
+     * @return Collection|Demandes[]
+     */
+    public function getDemandesCreated(): Collection
+    {
+        return $this->demandesCreated;
+    }
+
+    public function addDemandesCreated(Demandes $demandesCreated): self
+    {
+        if (!$this->demandesCreated->contains($demandesCreated)) {
+            $this->demandesCreated[] = $demandesCreated;
+            $demandesCreated->setCreateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandesCreated(Demandes $demandesCreated): self
+    {
+        if ($this->demandesCreated->contains($demandesCreated)) {
+            $this->demandesCreated->removeElement($demandesCreated);
+            // set the owning side to null (unless already changed)
+            if ($demandesCreated->getCreateur() === $this) {
+                $demandesCreated->setCreateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Demandes[]
+     */
+    public function getAVote(): Collection
+    {
+        return $this->aVote;
+    }
+
+    public function addAVote(Demandes $aVote): self
+    {
+        if (!$this->aVote->contains($aVote)) {
+            $this->aVote[] = $aVote;
+            $aVote->addVoteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAVote(Demandes $aVote): self
+    {
+        if ($this->aVote->contains($aVote)) {
+            $this->aVote->removeElement($aVote);
+            $aVote->removeVoteur($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getVotes(): Collection
+    {
+        return $this->votes;
+    }
+
+    public function addVote(Vote $vote): self
+    {
+        if (!$this->votes->contains($vote)) {
+            $this->votes[] = $vote;
+            $vote->setCitoyen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVote(Vote $vote): self
+    {
+        if ($this->votes->contains($vote)) {
+            $this->votes->removeElement($vote);
+            // set the owning side to null (unless already changed)
+            if ($vote->getCitoyen() === $this) {
+                $vote->setCitoyen(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
