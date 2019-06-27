@@ -2,13 +2,27 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Votez Petit...{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {{ encore_entry_link_tags('app') }}
         {% block stylesheets %}{% endblock %}
 
     </head>
     <body>
+    {#
+        {% if app.user %}
+            <a href="{{ path('app_logout') }}"> Se déconnecter</a>
+        {% else %}
+            <a href="{{ path('app_login') }}"> Se connecter</a>
+        {% endif %}
+
+        {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <div>
+                <a  href="{{ path('app_register') }}">Register</a>
+            </div>
+        {% endif %}
+    #}
         {% block body %}{% endblock %}
+        {{ encore_entry_script_tags('app') }}
         {% block javascripts %}{% endblock %}
     </body>
 </html>
