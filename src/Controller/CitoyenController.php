@@ -29,12 +29,12 @@ class CitoyenController extends AbstractController
     }
 
     /**
-     * @Route("/registration", name="citoyen_registration", methods={"GET","POST"})
+     * @Route("/registration", name="citoyen_new", methods={"GET","POST"})
      */
     public function new(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder): Response
     {
         $citoyen = new Citoyen();
-        $form = $this->createForm(CitoyenType::class, $citoyen);
+        $form = $this->createForm(RegisterType::class, $citoyen);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
