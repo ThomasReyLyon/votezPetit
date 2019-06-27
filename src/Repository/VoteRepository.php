@@ -19,6 +19,42 @@ class VoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Vote::class);
     }
 
+
+    public function getVotePour($id)
+	{
+		return $this->createQueryBuilder('v')
+			->andWhere('v.demande = :id')
+			->setParameter('id', $id)
+			->andWhere('v.etat = :pour')
+			->setParameter('pour', 'Pour')
+			->getQuery()
+			->getResult()
+			;
+	}
+
+	public function getVoteContre($id)
+	{
+		return $this->createQueryBuilder('v')
+			->andWhere('v.demande = :id')
+			->setParameter('id', $id)
+			->andWhere('v.etat = :pour')
+			->setParameter('pour', 'Contre')
+			->getQuery()
+			->getResult()
+			;
+	}
+
+	public function getVoteAbstention($id)
+	{
+		return $this->createQueryBuilder('v')
+			->andWhere('v.demande = :id')
+			->setParameter('id', $id)
+			->andWhere('v.etat = :pour')
+			->setParameter('pour', 'Abstention')
+			->getQuery()
+			->getResult()
+			;
+	}
     // /**
     //  * @return Vote[] Returns an array of Vote objects
     //  */
