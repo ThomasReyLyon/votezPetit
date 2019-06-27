@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Problems{% endblock %}
+
+{% block body %}
+    <h1>Problems</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ problem.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ problem.Type }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ problem.address }}</td>
+            </tr>
+            <tr>
+                <th>ZipCode</th>
+                <td>{{ problem.zipCode }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ problem.city }}</td>
+            </tr>
+            <tr>
+                <th>Validations</th>
+                <td>{{ problem.validations }}</td>
+            </tr>
+            <tr>
+                <th>IsSolved</th>
+                <td>{{ problem.isSolved ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Lat</th>
+                <td>{{ problem.lat }}</td>
+            </tr>
+            <tr>
+                <th>Lon</th>
+                <td>{{ problem.lon }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('problems_index') }}">back to list</a>
+
+    <a href="{{ path('problems_edit', {'id': problem.id}) }}">edit</a>
+
+    {{ include('problems/_delete_form.html.twig') }}
+{% endblock %}
