@@ -4,9 +4,7 @@
 
 {% block body %}
 
-<div class="section">
-    <div class="container">
-        <h1>Hello </h1>
+
 
         {% for demande in demandes %}
             <div class="columns">
@@ -27,4 +25,8 @@
         {% endfor %}
     </div>
 </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('main') }}
 {% endblock %}
