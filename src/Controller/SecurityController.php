@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -43,12 +44,15 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request, EntityManagerInterface $manager)
+    public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
+        $citoyen = new Citoyen();
         $form =$this->createForm(RegisterType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $citoyen= $form->getData();
+            $hash = $encoder->encodePassword($citoyen, $citoyen->getPassword());
+            $citoyen->setPassword($hash);
+            
             $manager->persist($citoyen);
             $manager->flush();
             $this->addFlash('success', 'yess');
