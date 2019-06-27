@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demandes{% endblock %}
+
+{% block body %}
+    <h1>Demandes</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ demande.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ demande.titre }}</td>
+            </tr>
+            <tr>
+                <th>Sommaire</th>
+                <td>{{ demande.sommaire }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ demande.contenu }}</td>
+            </tr>
+            <tr>
+                <th>Budget</th>
+                <td>{{ demande.budget }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ demande.createdAt ? demande.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Deadline</th>
+                <td>{{ demande.deadline ? demande.deadline|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>IsOuverte</th>
+                <td>{{ demande.isOuverte ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsValide</th>
+                <td>{{ demande.isValide ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>NombreVotes</th>
+                <td>{{ demande.nombreVotes }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('demandes_index') }}">back to list</a>
+
+    <a href="{{ path('demandes_edit', {'id': demande.id}) }}">edit</a>
+
+    {{ include('demandes/_delete_form.html.twig') }}
+{% endblock %}
