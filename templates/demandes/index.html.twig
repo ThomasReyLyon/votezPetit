@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demandes index{% endblock %}
+
+{% block body %}
+    <h1>Demandes index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Sommaire</th>
+                <th>Contenu</th>
+                <th>Budget</th>
+                <th>CreatedAt</th>
+                <th>Deadline</th>
+                <th>IsOuverte</th>
+                <th>IsValide</th>
+                <th>NombreVotes</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for demande in demandes %}
+            <tr>
+                <td>{{ demande.id }}</td>
+                <td>{{ demande.titre }}</td>
+                <td>{{ demande.sommaire }}</td>
+                <td>{{ demande.contenu }}</td>
+                <td>{{ demande.budget }}</td>
+                <td>{{ demande.createdAt ? demande.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ demande.deadline ? demande.deadline|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ demande.isOuverte ? 'Yes' : 'No' }}</td>
+                <td>{{ demande.isValide ? 'Yes' : 'No' }}</td>
+                <td>{{ demande.nombreVotes }}</td>
+                <td>
+                    <a href="{{ path('demandes_show', {'id': demande.id}) }}">show</a>
+                    <a href="{{ path('demandes_edit', {'id': demande.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('demandes_new') }}">Create new</a>
+{% endblock %}
