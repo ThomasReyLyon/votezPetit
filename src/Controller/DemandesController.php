@@ -68,13 +68,13 @@ class DemandesController extends AbstractController
     }
 
     /**
-     * @Route("/id/{id}", name="demandes_show", methods={"GET"})
+     * @Route("/{id}", name="demandes_show", methods={"GET"})
      */
-    public function show(Demandes $demande, Vote $vote): Response
+    public function show(Demandes $demande): Response
     {
         return $this->render('home/show.html.twig', [
             'demande' => $demande,
-            'vote' => $vote,
+
         ]);
     }
 
