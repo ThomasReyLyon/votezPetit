@@ -1,39 +1,39 @@
 <?php
 
-  namespace App\DataFixtures;
+namespace App\DataFixtures;
 
-  use App\Entity\Citoyen;
+use App\Entity\Citoyen;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-  use App\Service\Slugify;
-  use Doctrine\Bundle\FixturesBundle\Fixture;
-  use Doctrine\Common\Persistence\ObjectManager;
-  use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-  use Faker;
+class CitoyenFixtures extends BaseFixtures
+{
+    private $cypher;
 
-  class CitoyenFixtures extends Fixture
-  {
-
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function __construct(UserPasswordEncoderInterface $cypher)
     {
-      $faker  =  Faker\Factory::create('fr_FR');
-
-
-      for ($i=0; $i < 500; $i++) {
-        $citoyen = new Citoyen();
-        $citoyen->setNom($faker->lastName);
-        $citoyen->setPrenom($faker->firstName);
-        $citoyen->setNumeroElecteur($faker->ean8);
-        $citoyen->setNombreVotes($faker->randomDigitNotNull);
-        $citoyen->setNombrePropositions($faker->randomDigitNotNull);
-        $manager->persist($citoyen);
-
-
-      }
-      $manager->flush();
+        $this->cypher = $cypher;
     }
 
+    protected function loadData(ObjectManager $manager)
+    {
+        $this->createMany(Citoyen::class, 2000, function(Citoyen $citoyen, $i) {
+            if($i === 0){
+                $citoyen->setRoles(['ROLE_MAIRE']);
+                $citoyen->setNom('PETIT');
+            } else {
+                $citoyen->setRoles(['ROLE_CITOYEN']);
+                $citoyen->setNom($this->faker->lastName);
+            }
+            $citoyen->setEmail($this->faker->email);
+            $citoyen->setPrenom($this->faker->firstName);
+            $citoyen->setNumeroElecteur($this->faker->numberBetween($min= 10000000, $max= 99999999));
+            $citoyen->setNombreVotes($this->faker->randomDigitNotNull);
+            $citoyen->setNombrePropositions($this->faker->randomDigitNotNull);
+            $citoyen->setPassword($this->cypher->encodePassword($citoyen, 'pwd'));
 
-  }
+        });
+        $manager->flush();
+    }
+
+}
