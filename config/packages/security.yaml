@@ -16,17 +16,16 @@ security:
             security: false
         main:
             anonymous: true
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
+
             logout:
                 # The route name the user can go to in order to logout
                 path: app_logout
                 # The name of the route to redirect to after logging out
                 target: home
-            remember_me:
-                secret:   '%kernel.secret%'
-                lifetime: 2592000
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
