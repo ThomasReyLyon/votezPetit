@@ -65,7 +65,7 @@ class Citoyen implements UserInterface
     private $aVote;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="citoyen")
+     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="citoyen", cascade={"persist", "remove"})
      */
     private $votes;
 
