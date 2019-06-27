@@ -5,6 +5,7 @@
 {% block body %}
 
 
+<<<<<<<<< Temporary merge branch 1
         {% for demande in demandes %}
             <div class="columns">
                 <h1>{{ demande.titre }}</h1>
@@ -24,4 +25,8 @@
         {% endfor %}
     </div>
 </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('main') }}
 {% endblock %}
