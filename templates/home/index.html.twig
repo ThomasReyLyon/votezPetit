@@ -4,17 +4,8 @@
 
 {% block body %}
 
-<div class="section">
-    <div class="container">
-        <h1>Hello </h1>
 
-        <div class="columns">
-            <div class="column">1</div>
-            <div class="column">2</div>
-            <div class="column">3</div>
-            <div class="column">4</div>
-            <div class="column">5</div>
-        </div>
-    </div>
-</div>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('main') }}
 {% endblock %}
