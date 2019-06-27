@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Service;
 
 
 use App\Entity\Citoyen;
@@ -26,16 +26,17 @@ class VoteService
 		$this->entityManager = $entityManager;
 	}
 
-	public function newVote(Citoyen $citoyen,Vote $voteExprime,Demandes $demande)
+	public function newVote(Citoyen $citoyen,Vote $voteExprime,Demandes $demande) : void
 	{
 
+		//enregistre données du vote dans table vote
 		$voteExprime->setCitoyen($citoyen);
 		$voteExprime->setDemande($demande);
 		$this->entityManager->persist($voteExprime);
 
 		$this->entityManager->flush();
 
-
+		//incremente compteur vote entité Demande
 		$demandeNombreVote =$demande->getNombreVotes();
 		$demande->addVote($voteExprime);
 		$demande->setNombreVotes($demandeNombreVote+1);
@@ -43,7 +44,7 @@ class VoteService
 		$this->entityManager->persist($demande);
 
 
-
+		//Met à jour l'objet citoyen
 		$userNombreVote = $citoyen->getNombreVotes();
 		//Increment nombreVotes from the User
 		$citoyen->addVote($voteExprime);
@@ -55,9 +56,15 @@ class VoteService
 	}
 
 	public function countVote(){
+
 		$demandes = $this->demandesRepository->findAll();
 
 		$votesCount = [];
+
+		//boucle sur toutes les demandes.
+		//retourne un table votesCount dont la première clé est l'index (même classement que demandes) et, pour
+		// chaque index numérique, 1 tableau avec 3 clés : pour/contre/abstention. La valeur est le compte de chaque
+		// query.
 		foreach($demandes as $key => $demande) {
 
 			$votesCount[$key]['pour'] = count($this->voteRepository->getVotePour($demande->getId()));

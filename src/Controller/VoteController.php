@@ -10,7 +10,7 @@ use App\Entity\Vote;
 use App\Form\VoteType;
 use App\Repository\DemandesRepository;
 use App\Repository\VoteRepository;
-use App\Services\VoteService;
+use App\Service\VoteService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +30,8 @@ class VoteController extends AbstractController
 	 */
 	public function voteIndex(DemandesRepository $demandesRepository, VoteService $voteService)
 	{
+
+
 		return $this->render('home/index.html.twig', [
 			'demandes' => $demandesRepository->findAll(),
 			'votes' => $voteService->countVote()
@@ -48,13 +50,11 @@ class VoteController extends AbstractController
 
 		$vote = new Vote();
 
+		$citoyenVotant = $this->getUser();
 
-			$citoyenVotant = $this->getUser();
+		$vote->setEtat($request->query->get('vote'));
 
-			$vote->setEtat($request->query->get('vote'));
-
-			$voteService->newVote($citoyenVotant, $vote, $demande);
-
+		$voteService->newVote($citoyenVotant, $vote, $demande);
 
 		return $this->redirectToRoute("vote_index");
 	}
