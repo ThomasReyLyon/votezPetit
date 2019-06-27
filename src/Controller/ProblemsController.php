@@ -50,7 +50,7 @@ class ProblemsController extends AbstractController
             return $this->redirectToRoute('problems_index');
         }
 
-        return $this->render('problems/new.html.twig', [
+        return $this->render('map/map.html.twig', [
             'problem' => $problem,
             'form' => $form->createView(),
         ]);

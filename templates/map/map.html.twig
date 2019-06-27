@@ -15,7 +15,7 @@
     <div id="map">
     </div>
 
-    <button id="btnmodal" class="button addEventButt is-outlined">Primary</button>
+    <button id="btnmodal" class="button addEventButt is-outlined">Add event</button>
 
     <div id="modal" class="modal">
         <div class="modal-background"></div>
@@ -25,7 +25,10 @@
                 <button id="cancel" class="delete" aria-label="close"></button>
             </header>
             <section class="modal-card-body">
-                <!-- Content ... -->
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn">{{ button_label|default('Save') }}</button>
+                {{ form_end(form) }}
             </section>
             <footer class="modal-card-foot">
                 <button class="button is-success">Save changes</button>
@@ -85,7 +88,7 @@
                     + adresses[adresse].address + "</p>"+
                     "<p>"
                     + adresses[adresse].ZC + " " + adresses[adresse].city +
-                    "</p>"
+                    '</p> <a href="/' + adresses[adresse].id + '/validate"> Valider </a>'
                 )
                     .addTo(macarte);
                 // Nous ajoutons la popup. A noter que son contenu (ici la variable ville) peut être du HTML
