@@ -6,3 +6,48 @@
 @import "./grid/_all";
 @import "./layout/_all";
 
+body {
+  background-color: #F9F9F9;
+}
+.container {
+  padding: 2rem;
+  color: #7a7a7a !important;
+}
+.w-large {
+  width:65vw;
+
+}
+
+.pt-3 {
+  padding-top: 3rem;
+}
+.-mt-1 {
+  margin-top: -1rem;
+}
+
+.tabs {
+  margin-top: 4rem;
+}
+.bordered {
+  border: 1px solid #dbdbdb;
+  margin-left: 0.05rem;
+  margin-top: -1.5rem;
+}
+
+.white-block {
+  margin-right: -0.8rem;
+  margin-top:-0.85rem;
+}
+
+.center {
+  border-left: 1px solid #dbdbdb;
+  border-right: 1px solid #dbdbdb;
+}
+
+.is-blue {
+  color: #99F4F4;
+}
+
+select {
+  color: #7a7a7a !important;
+}
