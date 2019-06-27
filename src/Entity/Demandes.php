@@ -40,7 +40,9 @@ class Demandes
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="demandes")
+     * @ORM\JoinTable(name="Categories")
      * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $categorie;
 
@@ -288,5 +290,7 @@ class Demandes
 
         return $this;
     }
+
+
 
 }
