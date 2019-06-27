@@ -9,6 +9,7 @@ use App\Repository\DemandesRepository;
 use App\Repository\VoteRepository;
 use DateInterval;
 use DateTime;
+use App\Service\VoteService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Test\Provider\DateTimeTest;
@@ -28,12 +29,17 @@ class DemandesController extends AbstractController
     /**
      * @Route("/ouvertes", name="demandes_ouvertes", methods={"GET"})
      */
-    public function ouvertes(DemandesRepository $demandesRepository, VoteRepository $voteRepo): Response
+    public function ouvertes(DemandesRepository $demandesRepository, VoteRepository $voteRepo, VoteService $voteService): Response
     {
         $demandes = $demandesRepository->findBy(['isOuverte' => 'True']);
 
+        $countStatus = $voteService->countVote();
+        $pourcentageVotes = $voteService->pourcentageVote();
+
         return $this->render('demandes/index.html.twig', [
-            'demandes' => $demandes
+            'demandes' => $demandes,
+            'countStatus'=> $countStatus,
+            'pourcentageVotes' => $pourcentageVotes
         ]);
     }
 

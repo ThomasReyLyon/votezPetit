@@ -32,6 +32,7 @@ class VoteRepository extends ServiceEntityRepository
 			;
 	}
 
+
 	public function getVoteContre($id)
 	{
 		return $this->createQueryBuilder('v')

@@ -3,6 +3,7 @@
 {% block title %}Demandes index{% endblock %}
 
 {% block body %}
+    {{ dump(demandes) }}
 <div class="container is-fluid has-text-white">
     <div class="level-item">
         <div class="field has-addons">
@@ -110,18 +111,20 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
-                        <p>38 %</p>
+                        <p>{{ pourcentageVotes[demande.id]['contre'] }} %</p>
                     </div>
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p>Contre <span>988 050</span></p>
+
+                        <p>Contre <span>{{ countStatus[demande.id]['contre'] }}</span></p>
                     </div>
                 </div>
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
-                    <progress class="progress is-danger" value="15" max="100">15%</progress>
+
+                    <progress class="progress is-danger" value="{{ pourcentageVotes[demande.id]['contre'] }}" max="100"></progress>
                 </div>
             </div>
 
@@ -131,18 +134,18 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
-                        <p>38 %</p>
+                        <p>{{ pourcentageVotes[demande.id]['pour'] }} %</p>
                     </div>
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p>Pour <span>988 050</span></p>
+                        <p>Pour <span>{{ countStatus[demande.id]['contre'] }}</span></p>
                     </div>
                 </div>
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
-                    <progress class="progress is-success" value="15" max="100">15%</progress>
+                    <progress class="progress is-success" value="{{ pourcentageVotes[demande.id]['pour'] }}" max="100"></progress>
                 </div>
             </div>
 
@@ -152,18 +155,18 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
-                        <p>38 %</p>
+                        <p>{{ pourcentageVotes[demande.id]['abstention'] }} %</p>
                     </div>
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p>Neutre <span>988 050</span></p>
+                        <p>Abstention <span>{{ countStatus[demande.id]['abstention'] }}</span></p>
                     </div>
                 </div>
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
-                    <progress class="progress" value="15" max="100">15%</progress>
+                    <progress class="progress" value="{{ pourcentageVotes[demande.id]['abstention'] }}" max="100"></progress>
                 </div>
             </div>
         </div>
