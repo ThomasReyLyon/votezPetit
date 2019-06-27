@@ -46,7 +46,7 @@ class VoteController extends AbstractController
 						 VoteRepository $voteRepository):Response
 	{
 
-		$vote = new Vote();
+		  $vote = new Vote();
 
 
 			$citoyenVotant = $this->getUser();
