@@ -49,7 +49,7 @@ class VoteController extends AbstractController
 	public function vote(VoteService $voteService, Request $request, Demandes $demande):Response
 	{
 
-		$vote = new Vote();
+		  $vote = new Vote();
 
 		$citoyenVotant = $this->getUser();
 
