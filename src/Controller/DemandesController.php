@@ -34,7 +34,7 @@ class DemandesController extends AbstractController
     /**
      * @Route("/new", name="demandes_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Citoyen $citoyen): Response
+    public function new(Request $request): Response
     {
         $demande = new Demandes();
         $form = $this->createForm(DemandesType::class, $demande);
@@ -47,16 +47,16 @@ class DemandesController extends AbstractController
             $demande->setDeadline($now->add(new DateInterval('P30D')));
             $demande->setIsOuverte(true);
             $demande->setIsValide(true);
-            $createur=$this->getUser()->getId();
-            dump($createur);
-            $demande->setCreateur($citoyen);
+
+            $demande->setCreateur($createur=$this->getUser());
+
 
             $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->persist($demande);
             $entityManager->flush();
 
-         //   return $this->redirectToRoute('demandes_index');
+            return $this->redirectToRoute('demandes_index');
         }
 
         return $this->render('demandes/new.html.twig', [
