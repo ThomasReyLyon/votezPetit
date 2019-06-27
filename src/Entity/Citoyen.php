@@ -118,12 +118,12 @@ class Citoyen implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_CITOYEN';
 
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles = ['ROLE_CITOYEN'])
     {
         $this->roles = $roles;
 
@@ -210,10 +210,8 @@ class Citoyen implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Demandes[]
-     */
-    public function getDemandesCreated(): Collection
+
+    public function getDemandesCreated()
     {
         return $this->demandesCreated;
     }
@@ -241,10 +239,7 @@ class Citoyen implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Demandes[]
-     */
-    public function getAVote(): Collection
+    public function getAVote()
     {
         return $this->aVote;
     }
@@ -268,11 +263,8 @@ class Citoyen implements UserInterface
 
         return $this;
     }
-
-    /**
-     * @return Collection|Vote[]
-     */
-    public function getVotes(): Collection
+    
+    public function getVotes()
     {
         return $this->votes;
     }

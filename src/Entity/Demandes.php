@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DemandesRepository")
+ *
  */
 class Demandes
 {
@@ -15,6 +17,7 @@ class Demandes
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+	 * @MaxDepth(2)
      */
     private $id;
 
@@ -40,7 +43,10 @@ class Demandes
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="demandes")
+     * @ORM\JoinTable(name="Categories")
      * @ORM\JoinColumn(nullable=false)
+	 * @MaxDepth(2)
+     *
      */
     private $categorie;
 
@@ -67,6 +73,7 @@ class Demandes
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Citoyen", inversedBy="demandesCreated")
      * @ORM\JoinColumn(nullable=false)
+	 * @MaxDepth(2)
      */
     private $createur;
 
@@ -77,11 +84,13 @@ class Demandes
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Citoyen", inversedBy="aVote")
+	 * @MaxDepth(2)
      */
     private $voteurs;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="demande")
+	 * @MaxDepth(2)
      */
     private $votes;
 
@@ -288,5 +297,7 @@ class Demandes
 
         return $this;
     }
+
+
 
 }

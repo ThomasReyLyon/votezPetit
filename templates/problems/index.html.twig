@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Problems index{% endblock %}
+
+{% block body %}
+    <h1>Problems index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Address</th>
+                <th>ZipCode</th>
+                <th>City</th>
+                <th>Validations</th>
+                <th>IsSolved</th>
+                <th>Lat</th>
+                <th>Lon</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for problem in problems %}
+            <tr>
+                <td>{{ problem.id }}</td>
+                <td>{{ problem.Type }}</td>
+                <td>{{ problem.address }}</td>
+                <td>{{ problem.zipCode }}</td>
+                <td>{{ problem.city }}</td>
+                <td>{{ problem.validations }}</td>
+                <td>{{ problem.isSolved ? 'Yes' : 'No' }}</td>
+                <td>{{ problem.lat }}</td>
+                <td>{{ problem.lon }}</td>
+                <td>
+                    <a href="{{ path('problems_show', {'id': problem.id}) }}">show</a>
+                    <a href="{{ path('problems_edit', {'id': problem.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('problems_new') }}">Create new</a>
+{% endblock %}
