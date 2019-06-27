@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Citoyen;
+use App\Entity\Categories;
 use App\Entity\Demandes;
 use App\Form\DemandesType;
 use App\Repository\DemandesRepository;
@@ -90,7 +90,6 @@ class DemandesController extends AbstractController
                 'id' => $demande->getId(),
             ]);
         }
-
         return $this->render('demandes/edit.html.twig', [
             'demande' => $demande,
             'form' => $form->createView(),
