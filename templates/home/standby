@@ -1,0 +1,26 @@
+{% for demande in demandes %}
+            <div class="columns">
+                <h1>{{ demande.titre }}</h1>
+                <p>{{ demande.contenu }}</p>
+
+
+
+                <div>
+
+                </div>
+            </div>
+        {% endfor %}
+        {% for vote in votes %}
+            Pour {{ loop.index }}: {{  vote.pour }}
+            Contre {{ loop.index }}:{{ vote.contre }}
+        Abstention {{ loop.index }}{{ vote.abstention}}
+        {% endfor %}
+
+
+
+
+
+
+                                        <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Pour'}) }}" class="button">Vote Pour</a>
+                                        <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Abstention'}) }}" class="button">Vote Abstention</a>
+                                        <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Contre'}) }}" class="class="button">Vote Contre</a>

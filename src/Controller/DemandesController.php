@@ -2,19 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Citoyen;
+use App\Entity\Categories;
 use App\Entity\Demandes;
+use App\Entity\Vote;
 use App\Form\DemandesType;
 use App\Repository\DemandesRepository;
 use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Faker\Test\Provider\DateTimeTest;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Tests\Extension\Core\Type\DateIntervalTypeTest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/demandes")
@@ -44,12 +47,11 @@ class DemandesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $demande->setCreatedAt(new DateTime());
             $now = new DateTime();
-            $demande->setDeadline($now->add(new DateInterval('P30D')));
+            $demande->setDeadline($now->add(new DateInterval('P1M')));
             $demande->setIsOuverte(true);
             $demande->setIsValide(true);
 
-            $demande->setCreateur($createur=$this->getUser());
-
+            $demande->setCreateur($this->getUser());
 
             $entityManager = $this->getDoctrine()->getManager();
 
@@ -70,8 +72,9 @@ class DemandesController extends AbstractController
      */
     public function show(Demandes $demande): Response
     {
-        return $this->render('demandes/show.html.twig', [
+        return $this->render('home/show.html.twig', [
             'demande' => $demande,
+
         ]);
     }
 
@@ -98,7 +101,7 @@ class DemandesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="demandes_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="demandes_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Demandes $demande): Response
     {
@@ -110,4 +113,32 @@ class DemandesController extends AbstractController
 
         return $this->redirectToRoute('demandes_index');
     }
+
+	/**
+	 * @param DemandesRepository $demandesRepository
+	 * @Route("/demandeOuverte/", name="demande_active", methods={"GET"})
+	 */
+    public function demandesOuverte(DemandesRepository $demandesRepository, SerializerInterface $serializer):Response
+	{
+		$demandeOuverte = $demandesRepository->findBy(['isOuverte' => true]);
+
+
+		$demandeOuverteJson = $serializer->serialize($demandeOuverte, 'json', [
+			'attributes' => [
+                'id',
+				'titre',
+				'contenu',
+				'sommaire',
+				'budget',
+				'categorie' => ['categories' => 'nom'],
+				'createdAt',
+				'deadline',
+				'createur' => ['citoyen' => 'id', 'nom', 'prenom'],
+				'nombreVotes',
+				'voteurs' => ['citoyen' => 'id', 'nom', 'prenom'],
+				'votes' => ['vote' => 'etat']
+			]]);
+
+		return new Response($demandeOuverteJson, 200, ['content-type'=> 'application/json']);
+	}
 }

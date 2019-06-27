@@ -26,7 +26,6 @@ class DemandesType extends AbstractType
             ->add('categorie', EntityType::class, [
               'class'=> Categories::class,
               'choice_label'=>'nom',
-              'multiple'=>false,
               'by_reference'=>false
               ])
 

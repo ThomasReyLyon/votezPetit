@@ -1,10 +1,205 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Test {% endblock %}
 
 {% block body %}
+    <div class="container is-fluid has-text-white">
+        <div class="level-item">
+            <div class="field has-addons">
+                <div class="control">
+                    <div class="select is-medium is-primary">
+                        <select>
+                            <option>CATEGORY</option>
+                            <option>With options</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="control">
+                    <input class="input is-medium w-large is-primary" type="text" placeholder="Find a post">
+                </p>
+                <p class="control">
+                    <button class="button is-medium is-primary">
+                        SEARCH
+                    </button>
+                </p>
+            </div>
+        </div>
 
+        <!-- TABS -->
+        <div class="tabs is-boxed is-fullwidth">
+            <ul>
+                <li class="is-active">
+                    <a style="background-color: #F9F9F9">
+                        <span class="has-text-grey has-text-weight-bold">Ouvertes</span>
+                    </a>
+                </li>
+                <li>
+                    <a style="background-color: #F9F9F9">
+                        <span class="has-text-grey has-text-weight-bold">Terminées</span>
+                    </a>
+                </li>
+                <li>
+                    <a style="background-color: #F9F9F9">
+                        <span class="has-text-grey has-text-weight-bold">Completées</span>
+                    </a>
+                </li>
+                <li>
+                    <a style="background-color: #F9F9F9">
+                        <span class="has-text-grey has-text-weight-bold">Rejetées</span>
+                    </a>
+                </li>
+                <li>
+                    <a style="background-color: #F9F9F9">
+                        <span class="has-text-grey has-text-weight-bold">Annulées</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
+        <!-- BLOCK -->
+        <div class="columns bordered">
+            <div class="column">
+                <div class="level">
+                    <div class="level-left">
+                        <span class="tag is-primary">Categorie</span>
+                    </div>
+                </div>
+
+    {% for lien in pagination.countDemandes %}
+        <a href="{{ path("vote_index", {'page' : lien}) }}">{{ lien }}</a>
+    {% endfor %}
+
+        {% for demande in demandes  | slice(pagination.pageFloorSlice, 5)%}
+
+            <div class="columns">
+                <h1>{{ demande.titre }}</h1>
+                <p>{{ demande.contenu }}</p>
+                <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Pour'}) }}">Vote Pour</a>
+                <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Contre'}) }}">Vote Contre</a>
+                <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Abstention'}) }}">Vote Abstention</a>
+                <div>
+
+                  {% endfor %}
+                <div class="level has-text-grey">
+                    <div class="level-left has-text-weight-semibold">
+                        <p>Titre</p>
+                    </div>
+                    <div class="level-right">
+                        <p>Cree le jkdjkdbchdb</p>
+                    </div>
+                </div>
+
+                <div class="level">
+                    <p>On sait depuis longtemps que travailler avec du texte lisible et
+                        contenant du sens est source de distractions, et empêche de se
+                        concentrer sur la mise en page elle-même.</p>
+                </div>
+            </div>
+
+            <div class="column center">
+                <div class="level">
+                    <div class="level-item">
+                        <p class="has-text-weight-semibold pt-3">Fonds demandés</p>
+                    </div>
+
+                </div>
+                <div class="level">
+                    <div class="level-item">
+                        <p class="has-text-weight-bold">15 000€</p>
+                    </div>
+                </div>
+                <div class="level">
+                    <div class="level-item">
+                        <progress class="progress is-info" value="15" max="100">15%</progress>
+                    </div>
+                </div>
+                <div class="level">
+                    <div class="level-item">
+                        <p>vote deadline : <span>01/01/2020</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <span class="icon">
+                              <i class="fas fa-home"></i>
+                            </span>
+                            <p>38 %</p>
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <p>Contre <span>988 050</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="level">
+                    <div class="level-item -mt-1">
+                        <progress class="progress is-danger" value="15" max="100">15%</progress>
+                    </div>
+                </div>
+
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <span class="icon">
+                              <i class="fas fa-home"></i>
+                            </span>
+                            <p>38 %</p>
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <p>Pour <span>988 050</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="level">
+                    <div class="level-item -mt-1">
+                        <progress class="progress is-success" value="15" max="100">15%</progress>
+                    </div>
+                </div>
+
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <span class="icon">
+                              <i class="fas fa-home"></i>
+                            </span>
+                            <p>38 %</p>
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <p>Neutre <span>988 050</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="level">
+                    <div class="level-item -mt-1">
+                        <progress class="progress" value="15" max="100">15%</progress>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns bordered white-block" style="background-color: #FFFFFF;">
+            <div class="column">
+                <div class="level has-text-centered">
+                    <div class="level-item">
+                        <a class="button is-primary is-outlined">Detail</a>
+                    </div>
+
+                    <div class="level-item has-text-centered">
+                        <a class="button is-primary is-outlined">Qui a voté ?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('main') }}
