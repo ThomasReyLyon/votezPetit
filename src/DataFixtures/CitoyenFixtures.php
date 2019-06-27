@@ -1,39 +1,23 @@
 <?php
 
-  namespace App\DataFixtures;
+namespace App\DataFixtures;
 
-  use App\Entity\Citoyen;
+use App\Entity\Citoyen;
+use Doctrine\Common\Persistence\ObjectManager;
 
-  use App\Service\Slugify;
-  use Doctrine\Bundle\FixturesBundle\Fixture;
-  use Doctrine\Common\Persistence\ObjectManager;
-  use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-  use Faker;
-
-  class CitoyenFixtures extends Fixture
-  {
-
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+class CitoyenFixtures extends BaseFixtures
+{
+    protected function loadData(ObjectManager $manager)
     {
-      $faker  =  Faker\Factory::create('fr_FR');
+        $this->createMany(Citoyen::class, 5000, function(Citoyen $citoyen) {
+            $citoyen->setNom($this->faker->lastName);
+            $citoyen->setPrenom($this->faker->firstName);
+            $citoyen->setNumeroElecteur($this->faker->ean8);
+            $citoyen->setNombreVotes($this->faker->randomDigitNotNull);
+            $citoyen->setNombrePropositions($this->faker->randomDigitNotNull);
 
-
-      for ($i=0; $i < 500; $i++) {
-        $citoyen = new Citoyen();
-        $citoyen->setNom($faker->lastName);
-        $citoyen->setPrenom($faker->firstName);
-        $citoyen->setNumeroElecteur($faker->ean8);
-        $citoyen->setNombreVotes($faker->randomDigitNotNull);
-        $citoyen->setNombrePropositions($faker->randomDigitNotNull);
-        $manager->persist($citoyen);
-
-
-      }
-      $manager->flush();
+        });
+        $manager->flush();
     }
 
-
-  }
+}
