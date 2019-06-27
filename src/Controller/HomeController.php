@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/home", name="home")
      */
     public function index(DemandesRepository $demandesRepository)
     {
@@ -20,7 +20,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/show", name="show")
+     * @Route("/showoupas", name="show")
      */
     public function show()
     {

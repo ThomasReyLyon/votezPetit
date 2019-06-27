@@ -3,73 +3,17 @@
 {% block title %}Test {% endblock %}
 
 {% block body %}
-    <div class="container is-fluid has-text-white">
-        <div class="level-item">
-            <div class="field has-addons">
-                <div class="control">
-                    <div class="select is-medium is-primary">
-                        <select>
-                            <option>CATEGORY</option>
-                            <option>With options</option>
-                        </select>
-                    </div>
-                </div>
-                <p class="control">
-                    <input class="input is-medium w-large is-primary" type="text" placeholder="Find a post">
-                </p>
-                <p class="control">
-                    <button class="button is-medium is-primary">
-                        SEARCH
-                    </button>
-                </p>
-            </div>
-        </div>
 
-        <!-- TABS -->
-        <div class="tabs is-boxed is-fullwidth">
-            <ul>
-                <li class="is-active">
-                    <a style="background-color: #F9F9F9">
-                        <span class="has-text-grey has-text-weight-bold">Ouvertes</span>
-                    </a>
-                </li>
-                <li>
-                    <a style="background-color: #F9F9F9">
-                        <span class="has-text-grey has-text-weight-bold">Terminées</span>
-                    </a>
-                </li>
-                <li>
-                    <a style="background-color: #F9F9F9">
-                        <span class="has-text-grey has-text-weight-bold">Completées</span>
-                    </a>
-                </li>
-                <li>
-                    <a style="background-color: #F9F9F9">
-                        <span class="has-text-grey has-text-weight-bold">Rejetées</span>
-                    </a>
-                </li>
-                <li>
-                    <a style="background-color: #F9F9F9">
-                        <span class="has-text-grey has-text-weight-bold">Annulées</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
 
-        <!-- BLOCK -->
-        <div class="columns bordered">
-            <div class="column">
-                <div class="level">
-                    <div class="level-left">
-                        <span class="tag is-primary">Categorie</span>
-                    </div>
-                </div>
+
+
+
 
     {% for lien in pagination.countDemandes %}
         <a href="{{ path("vote_index", {'page' : lien}) }}">{{ lien }}</a>
     {% endfor %}
 
-        {% for demande in demandes  | slice(pagination.pageFloorSlice, 5)%}
+
 
             <div class="columns">
                 <h1>{{ demande.titre }}</h1>
@@ -78,7 +22,7 @@
                 <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Contre'}) }}">Vote Contre</a>
                 <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Abstention'}) }}">Vote Abstention</a>
                 <div>
-
+        {% endfor %}
                 <div class="level has-text-grey">
                     <div class="level-left has-text-weight-semibold">
                         <p>Titre</p>

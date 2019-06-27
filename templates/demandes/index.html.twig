@@ -3,26 +3,79 @@
 {% block title %}Demandes index{% endblock %}
 
 {% block body %}
-    <h1>Demandes index</h1>
+<div class="container is-fluid has-text-white">
+    <div class="level-item">
+        <div class="field has-addons">
+            <div class="control">
+                <div class="select is-medium is-primary">
+                    <select>
+                        <option>CATEGORY</option>
+                        <option>With options</option>
+                    </select>
+                </div>
+            </div>
+            <p class="control">
+                <input class="input is-medium w-large is-primary" type="text" placeholder="Find a post">
+            </p>
+            <p class="control">
+                <button class="button is-medium is-primary">
+                    SEARCH
+                </button>
+            </p>
+        </div>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Sommaire</th>
-                <th>Contenu</th>
-                <th>Budget</th>
-                <th>CreatedAt</th>
-                <th>Deadline</th>
-                <th>IsOuverte</th>
-                <th>IsValide</th>
-                <th>NombreVotes</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for demande in demandes %}
+    <!-- TABS -->
+    <div class="tabs is-boxed is-fullwidth">
+        <ul>
+            <li class="is-active">
+                <a style="background-color: #F9F9F9">
+                    <span class="has-text-grey has-text-weight-bold">Ouvertes</span>
+                </a>
+            </li>
+            <li>
+                <a style="background-color: #F9F9F9">
+                    <span class="has-text-grey has-text-weight-bold">Terminées</span>
+                </a>
+            </li>
+            <li>
+                <a style="background-color: #F9F9F9">
+                    <span class="has-text-grey has-text-weight-bold">Completées</span>
+                </a>
+            </li>
+            <li>
+                <a style="background-color: #F9F9F9">
+                    <span class="has-text-grey has-text-weight-bold">Rejetées</span>
+                </a>
+            </li>
+            <li>
+                <a style="background-color: #F9F9F9">
+                    <span class="has-text-grey has-text-weight-bold">Annulées</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- BLOCK -->
+    <div class="ouvertes">
+        {% for demande in demandes  | slice(pagination.pageFloorSlice, 5)%}
+            {% demande.isOuverte == true %}
+                <div class="columns bordered">
+                    <div class="column">
+                        <div class="level">
+                            <div class="level-left">
+                                <span class="tag is-primary">{{ demande.categorie }}</span>
+                            </div>
+                        </div>
+
+            {% endif %}
+
+
+</div>{# this div close container#}
+
+
+
+            </div>
             <tr>
                 <td>{{ demande.id }}</td>
                 <td>{{ demande.titre }}</td>
