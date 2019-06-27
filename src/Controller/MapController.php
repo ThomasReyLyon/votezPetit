@@ -13,12 +13,14 @@ class MapController extends AbstractController
     /**
      * @Route("/map", name="map")
      */
-    public function map2(
+    public function map(
         ProblemsRepository $problemsRepository
     ) {
         return $this->render('map/map.html.twig', [
             'problems' => $problemsRepository->findAll(),
-
         ]);
     }
+
+
+
 }
