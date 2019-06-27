@@ -6,9 +6,11 @@ use App\Entity\Categories;
 use App\Entity\Demandes;
 use App\Form\DemandesType;
 use App\Repository\DemandesRepository;
+use App\Repository\VoteRepository;
 use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Faker\Test\Provider\DateTimeTest;
 use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,14 +26,27 @@ use Symfony\Component\Serializer\SerializerInterface;
 class DemandesController extends AbstractController
 {
     /**
-     * @Route("/", name="demandes_index", methods={"GET"})
+     * @Route("/ouvertes", name="demandes_ouvertes", methods={"GET"})
      */
-    public function index(DemandesRepository $demandesRepository): Response
+    public function ouvertes(DemandesRepository $demandesRepository, VoteRepository $voteRepo): Response
+    {
+        $demandes = $demandesRepository->findBy(['isOuverte' => 'True']);
+
+        return $this->render('demandes/index.html.twig', [
+            'demandes' => $demandes
+        ]);
+    }
+
+    /**
+     * @Route("/validees", name="demandes_validees", methods={"GET"})
+     */
+    public function validees(DemandesRepository $demandesRepository): Response
     {
         return $this->render('demandes/index.html.twig', [
             'demandes' => $demandesRepository->findAll(),
         ]);
     }
+
 
     /**
      * @Route("/new", name="demandes_new", methods={"GET","POST"})
@@ -116,7 +131,7 @@ class DemandesController extends AbstractController
 	 * @param DemandesRepository $demandesRepository
 	 * @Route("/demandeOuverte/", name="demande_active", methods={"GET"})
 	 */
-    public function demandesOuverte(DemandesRepository $demandesRepository, SerializerInterface $serializer):Response
+    public function demandesOuverteJson(DemandesRepository $demandesRepository, SerializerInterface $serializer):Response
 	{
 		$demandeOuverte = $demandesRepository->findBy(['isOuverte' => true]);
 

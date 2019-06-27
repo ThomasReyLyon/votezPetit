@@ -57,48 +57,140 @@
     </div>
 
     <!-- BLOCK -->
-    <div class="ouvertes">
-        {% for demande in demandes  | slice(pagination.pageFloorSlice, 5)%}
-            {% demande.isOuverte == true %}
-                <div class="columns bordered">
-                    <div class="column">
-                        <div class="level">
-                            <div class="level-left">
-                                <span class="tag is-primary">{{ demande.categorie }}</span>
-                            </div>
-                        </div>
 
-            {% endif %}
-
-
-</div>{# this div close container#}
-
-
-
+    {% for demande in demandes %}
+    <div class="columns bordered">
+{# Block left#}
+        <div class="column">
+            <div class="level">
+                <div class="level-left">
+                    <span class="tag is-primary"></span>
+                </div>
             </div>
-            <tr>
-                <td>{{ demande.id }}</td>
-                <td>{{ demande.titre }}</td>
-                <td>{{ demande.sommaire }}</td>
-                <td>{{ demande.contenu }}</td>
-                <td>{{ demande.budget }}</td>
-                <td>{{ demande.createdAt ? demande.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ demande.deadline ? demande.deadline|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ demande.isOuverte ? 'Yes' : 'No' }}</td>
-                <td>{{ demande.isValide ? 'Yes' : 'No' }}</td>
-                <td>{{ demande.nombreVotes }}</td>
-                <td>
-                    <button class="button is-success is-rounded"><a href="{{ path('demandes_show', {'id': demande.id}) }}">show</a></button>
+            <div class="level has-text-weight-semibold">
+                    <p>{{ demande.titre }}</p>
+            </div>
+                <div class="level has-text-grey">
+                    <p>Cree le {{ demande.createdAt|date("d/m/Y") }}</p>
+                </div>
 
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="level">
+                <p>{{ demande.sommaire }}</p>
+            </div>
+        </div>
+{# Block Middle #}
+        <div class="column center">
+            <div class="level">
+                <div class="level-item">
+                    <p class="has-text-weight-semibold pt-3">Fonds demandés</p>
+                </div>
+            </div>
+            <div class="level">
+                <div class="level-item">
+                    <p class="has-text-weight-bold">{{ demande.budget }}€</p>
+                </div>
+            </div>
+            <div class="level">
+                <div class="level-item">
+                    {% set partDuBudget = (demande.budget / 400000) * 100 %}
+                    <progress class="progress is-info" value="{{ partDuBudget }}" max="100">{{ partDuBudget }}%</progress>
+                </div>
+            </div>
+            <div class="level">
+                <div class="level-item">
+                    <p>vote deadline : <span>{{ demande.deadline|date("d/m/Y") }}</span></p>
+                </div>
+            </div>
+        </div>
+{# Block right #}
+        <div class="column">
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                    <span class="icon">
+                      <i class="fas fa-home"></i>
+                    </span>
+                        <p>38 %</p>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        <p>Contre <span>988 050</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="level">
+                <div class="level-item -mt-1">
+                    <progress class="progress is-danger" value="15" max="100">15%</progress>
+                </div>
+            </div>
 
-   <button class="button is-link is-outlined is-rounded"> <a href="{{ path('demandes_new') }}">Soumettre une nouvelle demande</a></button>
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                    <span class="icon">
+                      <i class="fas fa-home"></i>
+                    </span>
+                        <p>38 %</p>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        <p>Pour <span>988 050</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="level">
+                <div class="level-item -mt-1">
+                    <progress class="progress is-success" value="15" max="100">15%</progress>
+                </div>
+            </div>
+
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                    <span class="icon">
+                      <i class="fas fa-home"></i>
+                    </span>
+                        <p>38 %</p>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        <p>Neutre <span>988 050</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="level">
+                <div class="level-item -mt-1">
+                    <progress class="progress" value="15" max="100">15%</progress>
+                </div>
+            </div>
+        </div>
+{# End right #}
+    </div>
+{# End row blocks #}
+    <div class="columns bordered white-block" style="background-color: #FFFFFF;">
+        <div class="column">
+            <div class="level has-text-centered">
+                <div class="level-item">
+                    <a class="button is-primary is-outlined">Detail</a>
+                </div>
+
+                <div class="level-item has-text-centered">
+                    <a class="button is-primary is-outlined">Qui a voté ?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+        {# this div close container#}
+</div>
+
+
+    <button class="button is-link is-outlined is-rounded"> <a href="{{ path('demandes_new') }}">Soumettre une nouvelle demande</a></button>
 {% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('main') }}
+{% endblock %}
+

@@ -55,6 +55,7 @@ class VoteRepository extends ServiceEntityRepository
 			->getResult()
 			;
 	}
+
     // /**
     //  * @return Vote[] Returns an array of Vote objects
     //  */

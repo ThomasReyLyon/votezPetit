@@ -15,3 +15,23 @@
             Contre {{ loop.index }}:{{ vote.contre }}
         Abstention {{ loop.index }}{{ vote.abstention}}
         {% endfor %}
+
+
+
+
+
+        ////
+
+
+        <td>{{ demande.id }}</td>
+                        <td>{{ demande.titre }}</td>
+                        <td>{{ demande.sommaire }}</td>
+                        <td>{{ demande.contenu }}</td>
+                        <td>{{ demande.budget }}</td>
+                        <td>{{ demande.createdAt ? demande.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ demande.deadline ? demande.deadline|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ demande.isOuverte ? 'Yes' : 'No' }}</td>
+                        <td>{{ demande.isValide ? 'Yes' : 'No' }}</td>
+                        <td>{{ demande.nombreVotes }}</td>
+                        <td>
+                            <button class="button is-success is-rounded"><a href="{{ path('demandes_show', {'id': demande.id}) }}">show</a></button>
