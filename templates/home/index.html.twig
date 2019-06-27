@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Test {% endblock %}
 
 {% block body %}
 
+    {% for lien in pagination.countDemandes %}
+        <a href="{{ path("vote_index", {'page' : lien}) }}">{{ lien }}</a>
+    {% endfor %}
 
-<<<<<<<<< Temporary merge branch 1
-        {% for demande in demandes %}
+        {% for demande in demandes  | slice(pagination.pageFloorSlice, 5)%}
+
             <div class="columns">
                 <h1>{{ demande.titre }}</h1>
                 <p>{{ demande.contenu }}</p>
