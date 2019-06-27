@@ -35,8 +35,8 @@
                 <td>{{ demande.isValide ? 'Yes' : 'No' }}</td>
                 <td>{{ demande.nombreVotes }}</td>
                 <td>
-                    <a href="{{ path('demandes_show', {'id': demande.id}) }}">show</a>
-                    <a href="{{ path('demandes_edit', {'id': demande.id}) }}">edit</a>
+                    <button class="button is-success is-rounded"><a href="{{ path('demandes_show', {'id': demande.id}) }}">show</a></button>
+
                 </td>
             </tr>
         {% else %}
@@ -47,5 +47,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('demandes_new') }}">Create new</a>
+   <button class="button is-link is-outlined is-rounded"> <a href="{{ path('demandes_new') }}">Soumettre une nouvelle demande</a></button>
 {% endblock %}
