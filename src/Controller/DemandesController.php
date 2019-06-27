@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Entity\Demandes;
+use App\Entity\Vote;
 use App\Form\DemandesType;
 use App\Repository\DemandesRepository;
 use DateInterval;
@@ -67,10 +68,11 @@ class DemandesController extends AbstractController
     /**
      * @Route("/{id}", name="demandes_show", methods={"GET"})
      */
-    public function show(Demandes $demande): Response
+    public function show(Demandes $demande, Vote $vote): Response
     {
-        return $this->render('demandes/show.html.twig', [
+        return $this->render('home/show.html.twig', [
             'demande' => $demande,
+            'vote' => $vote,
         ]);
     }
 
