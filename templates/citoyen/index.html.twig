@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Citoyen index{% endblock %}
+
+{% block body %}
+    <h1>Citoyen index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NumeroElecteur</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>NombreVotes</th>
+                <th>NombrePropositions</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for citoyen in citoyens %}
+            <tr>
+                <td>{{ citoyen.id }}</td>
+                <td>{{ citoyen.numeroElecteur }}</td>
+                <td>{{ citoyen.roles ? citoyen.roles|json_encode : '' }}</td>
+                <td>{{ citoyen.password }}</td>
+                <td>{{ citoyen.nom }}</td>
+                <td>{{ citoyen.prenom }}</td>
+                <td>{{ citoyen.nombreVotes }}</td>
+                <td>{{ citoyen.nombrePropositions }}</td>
+                <td>{{ citoyen.email }}</td>
+                <td>
+                    <a href="{{ path('citoyen_show', {'id': citoyen.id}) }}">show</a>
+                    <a href="{{ path('citoyen_edit', {'id': citoyen.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('citoyen_new') }}">Create new</a>
+{% endblock %}
