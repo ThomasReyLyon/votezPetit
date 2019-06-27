@@ -4,29 +4,40 @@
 namespace App\Service;
 
 
+use App\Repository\DemandesRepository;
+
 class Pagination
 {
 
-	public function pagination()
+	protected $demandesRepository;
+
+	public function __construct(DemandesRepository $demandesRepository)
 	{
+		$this->demandesRepository = $demandesRepository;
+	}
+
+	public function pagination($currentPage = 1)
+	{
+		$paginator = [];
 
 //Defines the limit of slice filter in TWIG display (6 articles / page)
-		if($request->get('page') == 1) {
-			$pageFloorSlice = $request->get('page')-1;
+		if($currentPage == 1) {
+			$paginator['pageFloorSlice'] = 0;
 		}
 		else{
-			$pageFloorSlice = ($request->get('page')-1)*6;
+			$paginator['pageFloorSlice'] = ($currentPage-1)*5;
 		}
 
+		$demandes = $this->demandesRepository->findAll();
 		// Generate the links to browse the page of 6 articles.
-		$countArticles = [];
-		$page = 0;
-		for ($i = 0; $i < count($articles); $i += 6){
-			$page++;
-			$countArticles[$i] = $page;
+		$countDemandes = [];
+		$paginator['page'] = 0;
+
+		for ($i = 0; $i < count($demandes); $i += 5){
+			$paginator['page']++;
+			$paginator['countDemandes'][$i] = $paginator['page'];
 		}
 
-		$currentPage = $request->get('page');
-		return;
+		return $paginator;
 	}
 }
