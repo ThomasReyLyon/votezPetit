@@ -1,27 +1,17 @@
 <?php
 
-  namespace App\DataFixtures;
+namespace App\DataFixtures;
 
+use App\Entity\Budget;
+use Doctrine\Common\Persistence\ObjectManager;
 
-  use App\Entity\Budget;
-  use App\Service\Slugify;
-  use Doctrine\Bundle\FixturesBundle\Fixture;
-  use Doctrine\Common\Persistence\ObjectManager;
-
-
-  class BudgetFixtures extends Fixture
-  {
-
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+class BudgetFixtures extends BaseFixtures
+{
+    protected function loadData(ObjectManager $manager)
     {
-        $budget = new Budget();
-        $budget->setMontant(400000);
-        $manager->persist($budget);
+        $this->createMany(Budget::class,1, function(Budget $budget) {
+            $budget->setMontant(400000);
+        });
         $manager->flush();
     }
-
-
-  }
+}
