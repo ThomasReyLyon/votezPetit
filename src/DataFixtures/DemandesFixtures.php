@@ -19,8 +19,10 @@ class DemandesFixtures extends BaseFixtures implements DependentFixtureInterface
             $demandes->setContenu($this->faker->text);
             $demandes->setBudget($this->faker->numberBetween($min = 1000, $max = 35000));
             $demandes->setCategorie($this->getRandomReference(Categories::class));
-            $demandes->setCreatedAt($this->faker->dateTimeBetween('-1 years', '-1 seconds'));
-            $demandes->setDeadline($this->faker->dateTimeBetween('+1 months', '+11 months'));
+            $demandes->setCreatedAt($this->faker->dateTimeBetween('-1 month', '-1 seconds'));
+            $demandes->setDeadline($this->faker->dateTimeInInterval($startDate = $demandes->getCreatedAt(), $interval
+                = '+ 30 days',
+                $timezone = null));
             $demandes->setIsOuverte(true);
             $demandes->setIsValide(true);
             $demandes->setCreateur($this->getRandomReference(Citoyen::class));

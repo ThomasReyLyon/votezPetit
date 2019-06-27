@@ -5,6 +5,27 @@
 {% block body %}
 
 
+
+        {% for demande in demandes %}
+            <div class="columns">
+                <h1>{{ demande.titre }}</h1>
+                <p>{{ demande.contenu }}</p>
+                <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Pour'}) }}">Vote Pour</a>
+                <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Contre'}) }}">Vote Contre</a>
+                <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Abstention'}) }}">Vote Abstention</a>
+                <div>
+
+                </div>
+            </div>
+        {% endfor %}
+        {% for vote in votes %}
+            Pour {{ loop.index }}: {{  vote.pour }}
+            Contre {{ loop.index }}:{{ vote.contre }}
+        Abstention {{ loop.index }}{{ vote.abstention}}
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('main') }}

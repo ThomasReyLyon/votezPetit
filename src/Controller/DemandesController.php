@@ -44,12 +44,11 @@ class DemandesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $demande->setCreatedAt(new DateTime());
             $now = new DateTime();
-            $demande->setDeadline($now->add(new DateInterval('P30D')));
+            $demande->setDeadline($now->add(new DateInterval('P1M')));
             $demande->setIsOuverte(true);
             $demande->setIsValide(true);
 
-            $demande->setCreateur($createur=$this->getUser());
-
+            $demande->setCreateur($this->getUser());
 
             $entityManager = $this->getDoctrine()->getManager();
 
@@ -90,6 +89,7 @@ class DemandesController extends AbstractController
                 'id' => $demande->getId(),
             ]);
         }
+
         return $this->render('demandes/edit.html.twig', [
             'demande' => $demande,
             'form' => $form->createView(),
