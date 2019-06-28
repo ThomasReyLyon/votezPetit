@@ -39,7 +39,7 @@ class VoteController extends AbstractController
 			 href="{{ path("vote_index", {'page' : lien}) }}">{{ lien }}</a>{% endfor %} pour afficher lien vers page
  . Et  {% for demande in demandes  | slice(pagination.pageFloorSlice, 5)%} pour gérer la vue */
 			'demandes' => $demandesRepository->findAll(),
-			'votes' => $voteService->countVote()
+			'votes' => $voteService->countVote($demandesRepository->findAll())
 		]);
 	}
 	/**
