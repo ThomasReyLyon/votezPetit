@@ -200,7 +200,7 @@ class DemandesController extends AbstractController
 
 	/**
 	 * @param DemandesRepository $demandesRepository
-	 * @Route("/json/", name="demande_active", methods={"GET"})
+	 * @Route("/json", name="demande_active", methods={"GET"})
 	 */
     public function demandesOuverteJson(DemandesRepository $demandesRepository, SerializerInterface $serializer):Response
 	{
