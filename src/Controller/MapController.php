@@ -8,6 +8,7 @@ use App\Entity\Problems;
 use App\Form\Problems1Type;
 use App\Repository\ProblemsRepository;
 use App\Service\GeoService;
+use Swift_Message;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,19 +47,22 @@ class MapController extends AbstractController
      * @param Problems $problem
      * @return Response
      */
-    public function validate(Request $request, Problems $problem): Response
+    public function validate(Request $request, Problems $problem, \Swift_Mailer $mailer): Response
     {
         $problem->setValidations($problem->getValidations()+1);
 
         $this->getDoctrine()->getManager()->flush();
 
-        if($problem->getValidations() > 3){
-            dump($problem);
+        if($problem->getValidations() >= 3){
+            $message = (new Swift_Message('Un nouveau ' . $problem->getType() . ' a été signalé'))
+                ->setFrom('mariner.connor@gmail.com')
+                ->setTo('mariner.connor@gmail.com')
+                ->setBody('Un nouveau ' . $problem->getType() . ' a été signalé à l\'adresse suivante: <p>' . $problem->getAddress() .'</p><p>' . $problem->getZipCode() . ' ' . $problem->getCity() . '</p>')
+            ;
+            $mailer->send($message);
 
         }
-        return $this->redirectToRoute('map', [
-            'id' => $problem->getId(),
-        ]);
+        return $this->redirectToRoute('map');
 
     }
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Entity\Demandes;
+use App\Entity\Vote;
 use App\Form\DemandesType;
 use App\Repository\DemandesRepository;
 use App\Repository\VoteRepository;
@@ -82,12 +83,13 @@ class DemandesController extends AbstractController
     }
 
     /**
-     * @Route("/id/{id}", name="demandes_show", methods={"GET"})
+     * @Route("/{id}", name="demandes_show", methods={"GET"})
      */
     public function show(Demandes $demande): Response
     {
-        return $this->render('demandes/show.html.twig', [
+        return $this->render('home/show.html.twig', [
             'demande' => $demande,
+
         ]);
     }
 

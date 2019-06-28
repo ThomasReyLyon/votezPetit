@@ -18,11 +18,6 @@
 
 
 
-
-
-        ////
-
-
         <td>{{ demande.id }}</td>
                         <td>{{ demande.titre }}</td>
                         <td>{{ demande.sommaire }}</td>
@@ -35,3 +30,8 @@
                         <td>{{ demande.nombreVotes }}</td>
                         <td>
                             <button class="button is-success is-rounded"><a href="{{ path('demandes_show', {'id': demande.id}) }}">show</a></button>
+=======
+
+                                        <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Pour'}) }}" class="button">Vote Pour</a>
+                                        <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Abstention'}) }}" class="button">Vote Abstention</a>
+                                        <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Contre'}) }}" class="class="button">Vote Contre</a>
