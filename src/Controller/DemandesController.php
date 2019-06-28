@@ -225,4 +225,23 @@ class DemandesController extends AbstractController
 
 		return new Response($demandeOuverteJson, 200, ['content-type'=> 'application/json']);
 	}
+
+    /**
+     * @Route("/{id}/voters", name="voters")
+     * @param $id
+     */
+	public function showVoters(Demandes $demandes, VoteRepository $voteRepository) {
+        $voteurs = $voteRepository->createQueryBuilder('v')
+                            ->where('v.demande = :id')
+                            ->setParameter('id', $demandes->getId())
+                            ->innerJoin('v.citoyen', 'c')
+                            ->select(['c.nom', 'c.prenom', 'v.etat'])
+                            ->getQuery()
+                            ->getResult()
+                        ;
+        return $this->render("/demandes/voters.html.twig", [
+            'voteurs' => $voteurs,
+            'demande' =>$demandes
+        ]);
+    }
 }
