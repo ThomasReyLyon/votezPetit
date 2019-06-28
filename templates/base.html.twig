@@ -8,6 +8,12 @@
 
     </head>
     <body>
+    {% for message in app.flashes('success') %}
+        <div class="notification">
+            <button class="delete"></button>
+            {{ message }}
+        </div>
+    {% endfor %}
     {#
         {% if app.user %}
             <a href="{{ path('app_logout') }}"> Se déconnecter</a>

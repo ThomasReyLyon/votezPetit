@@ -17,42 +17,40 @@
     <div class="container">
         <div class="columns">
             <div class="column">
-                <form method="post">
+                {{ form_start(form) }}
                     <div class="field">
                         <div class="control">
-                            <input id="demandes_titre" name="demandes[titre]" required="required"
-                                   maxlength="255" class="input" type="text" placeholder="Titre">
+                            {{ form_widget(form.titre) }}
                         </div>
                     </div>
 
                     <div class="field">
                         <div class="control">
-                            <input id="demandes_sommaire" name="demandes[sommaire]" required="required"
-                                   maxlength="255" class="input" type="text" placeholder="Sommaire">
+                            {{ form_widget(form.sommaire) }}
                         </div>
                     </div>
 
                     <div class="field">
                         <div class="control">
-                            <textarea class="textarea" name="demandes[titre]" required="required"
-                                      maxlength="255" placeholder="Description"></textarea>
+                            {{ form_widget(form.contenu) }}
                         </div>
                     </div>
 
                     <div class="field">
                         <div class="control">
-                            <input class="input" name="demandes[budget]" type="text" placeholder="Normal input">
+                            {{ form_widget(form.budget) }}
                         </div>
                     </div>
 
                     <div class="field">
                         <div class="control">
                             <div class="select">
+                                {{ form_row(form.categorie) }}
+                                {#
                                 <select name="demandes[categorie]">
-                                    {% for categorie in categories %}
-                                    <option value="{{ categorie.nom }}">{{ categorie.nom }}</option>
-                                    {% endfor %}
+                                        <option value="{{ categorie.nom }}">{{ categorie.nom }}</option>
                                 </select>
+                                #}
                             </div>
                         </div>
                     </div>
@@ -61,7 +59,7 @@
                             <button type="submit" class="button is-primary">Valider</button>
                         </div>
                     </div>
-                </form>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

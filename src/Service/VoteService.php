@@ -81,10 +81,14 @@ class VoteService
 	public function pourcentageVote($demandes) {
         $votesCount = $this->countVote($demandes);
         $pourcentages = [];
+
         foreach ($votesCount as $id => $demande) {
-            $pourcentages[$id]['pour'] = round(($demande['pour'] / array_sum($votesCount[$id])) * 100,2);
-            $pourcentages[$id]['contre'] = round(($demande['contre'] / array_sum($votesCount[$id])) * 100,2);
-            $pourcentages[$id]['abstention'] = round(($demande['abstention'] / array_sum($votesCount[$id])) * 100,2);
+            if($demande['pour'] != 0 || $demande['contre'] != 0 || $demande['abstention'] != 0) {
+                $pourcentages[$id]['pour'] = round(($demande['pour'] / array_sum($votesCount[$id])) * 100,2);
+                $pourcentages[$id]['contre'] = round(($demande['contre'] / array_sum($votesCount[$id])) * 100,2);
+                $pourcentages[$id]['abstention'] = round(($demande['abstention'] / array_sum($votesCount[$id])) * 100,2);
+            }
+
         }
         return $pourcentages;
     }

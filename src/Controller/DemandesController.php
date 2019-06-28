@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Repository\CategoriesRepository;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/demandes")
@@ -119,15 +118,15 @@ class DemandesController extends AbstractController
     /**
      * @Route("/new", name="demandes_new", methods={"GET","POST"})
      */
-    public function new(Request $request, CategoriesRepository $categoriesRepository, ValidatorInterface $validator): Response
+    public function new(Request $request): Response
     {
         $demande = new Demandes();
         $form = $this->createForm(DemandesType::class, $demande);
 
         $form->handleRequest($request);
+//
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        if ($request->getMethod() === "POST") {
-            $data = $request->get('demandes');
             $demande->setCreatedAt(new DateTime());
             $now = new DateTime();
             $demande->setDeadline($now->add(new DateInterval('P1M')));
@@ -136,24 +135,13 @@ class DemandesController extends AbstractController
 
             $demande->setCreateur($this->getUser());
 
-            $demande->setTitre($data['titre']);
-            $demande->setContenu($data['sommaire']);
-            $demande->setBudget($data['budget']);
-            $demande->setCategorie($categoriesRepository->findBy(['nom' => $data['categorie']])[0]);
 
-            $errors = $validator->validate($demande);
-
-            if (count($errors) > 0) {
-
-                $errorsString = (string) $errors;
-
-                return new Response($errorsString);
-            }
             $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->persist($demande);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre demande a été soumise pour validation');
             return $this->redirectToRoute('demandes_ouvertes');
         }
 

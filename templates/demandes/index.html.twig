@@ -116,20 +116,22 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
-                        <p>{{ pourcentageVotes[demande.id]['contre'] }} %</p>
+                        {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
+                            <p>{{ pourcentageVotes[demande.id]['contre'] }} %</p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-
                         <p>Contre <span>{{ countStatus[demande.id]['contre'] }}</span></p>
                     </div>
                 </div>
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
-
-                    <progress class="progress is-danger" value="{{ pourcentageVotes[demande.id]['contre'] }}" max="100"></progress>
+                    {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
+                        <progress class="progress is-danger" value="{{ pourcentageVotes[demande.id]['contre'] }}" max="100"></progress>
+                    {% endif %}
                 </div>
             </div>
 
@@ -139,7 +141,9 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
+                        {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
                         <p>{{ pourcentageVotes[demande.id]['pour'] }} %</p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="level-right">
@@ -150,7 +154,9 @@
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
+                    {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
                     <progress class="progress is-success" value="{{ pourcentageVotes[demande.id]['pour'] }}" max="100"></progress>
+                    {% endif %}
                 </div>
             </div>
 
@@ -160,7 +166,9 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
+                        {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
                         <p>{{ pourcentageVotes[demande.id]['abstention'] }} %</p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="level-right">
@@ -171,7 +179,9 @@
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
+                    {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
                     <progress class="progress" value="{{ pourcentageVotes[demande.id]['abstention'] }}" max="100"></progress>
+                    {% endif %}
                 </div>
             </div>
             {% endif %}

@@ -14,10 +14,34 @@ class DemandesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre')
-            ->add('sommaire')
-            ->add('contenu')
-            ->add('budget')
+            ->add('titre', null, [
+                'attr' => [
+                    'class' => 'input',
+                    'placeholder' => 'Titre'
+                ],
+                'label' => false,
+            ])
+            ->add('sommaire', null, [
+                'attr' => [
+                    'class' => 'input',
+                    'placeholder' => 'Sommaire'
+                ],
+                'label' => false,
+            ])
+            ->add('contenu', null, [
+                'attr' => [
+                    'class' => 'input',
+                    'placeholder' => 'Contenu'
+                    ],
+                'label' => false,
+            ])
+            ->add('budget', null, [
+                'attr' => [
+                    'class' => 'input',
+                    'placeholder' => 'Budget'
+                ],
+                'label' => false,
+            ])
             //->add('createdAt')
             //->add('deadline')
             //->add('isOuverte')
@@ -26,7 +50,8 @@ class DemandesType extends AbstractType
             ->add('categorie', EntityType::class, [
               'class'=> Categories::class,
               'choice_label'=>'nom',
-              'by_reference'=>false
+              'by_reference'=>false,
+                'label' => false,
               ])
 
             //->add('createur')
