@@ -110,6 +110,7 @@ class DemandesController extends AbstractController
     {
         return $this->render('demandes/index.html.twig', [
             'demandes' => $demandesRepository->findBy(['isValide' => false]),
+            'categories' => $this->categories
         ]);
     }
 
