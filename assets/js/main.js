@@ -1,7 +1,5 @@
 // MODAL
 
-document.addEventListener('DOMContentLoaded', () => {
-});
 let btnmodal = document.getElementById('btnmodal');
 let modal = document.getElementById('modal')
 let closeModal = document.getElementById('closeModal')
@@ -16,3 +14,12 @@ closeModal.addEventListener('click', function(){
 cancel.addEventListener('click', function(){
     modal.classList.remove('is-active')
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+    (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+        $notification = $delete.parentNode;
+        $delete.addEventListener('click', () => {
+            $notification.parentNode.removeChild($notification);
+        });
+    });
+});

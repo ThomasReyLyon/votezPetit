@@ -27,13 +27,6 @@ class Problems1Type extends AbstractType
             ->add('address')
             ->add('zipCode')
             ->add('city')
-            ->add('validations', ChoiceType::class, [
-                'choices' => [
-                    'Yes' => True,
-                    'No' => False
-                ]
-            ])
-            ->add('isSolved')
         ;
     }
 

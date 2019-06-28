@@ -150,6 +150,14 @@ class Demandes
         return $this->budget;
     }
 
+    /**
+     * @return string
+     */
+    public function getFormatedBudget()
+    {
+        return number_format($this->budget, 0, '', ' ');
+    }
+
     public function setBudget(?int $budget): self
     {
         $this->budget = $budget;

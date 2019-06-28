@@ -17,16 +17,29 @@
                     </select>
                 </div>
             </div>
+
+
+{# Search bar #}
+
             <p class="control">
-                <input class="input is-medium w-large is-primary" type="text" placeholder="Find a post">
+                <input class="input is-medium w-large is-primary" type="text" placeholder="Find a post" list="demandes">
+                {#
+                <datalist id="demandes">
+                    <option value="Kronenbourg">
+                    <option value="Grimbergen">
+                </datalist>
+                 #}
             </p>
             <p class="control">
                 <button class="button is-medium is-primary">
                     SEARCH
                 </button>
             </p>
+{# end search #}
         </div>
     </div>
+
+
 
     <!-- TABS -->
     <div class="tabs is-toggle is-fullwidth">
@@ -63,7 +76,7 @@
                     <p>{{ demande.titre }}</p>
             </div>
                 <div class="level has-text-grey">
-                    <p>Cree le {{ demande.createdAt|date("d/m/Y") }}</p>
+                    <p>Crée le {{ demande.createdAt|date("d/m/Y") }}</p>
                 </div>
 
             <div class="level">
@@ -79,7 +92,7 @@
             </div>
             <div class="level">
                 <div class="level-item">
-                    <p class="has-text-weight-bold">{{ demande.budget }}€</p>
+                    <p class="has-text-weight-bold">{{ demande.formatedBudget }}€</p>
                 </div>
             </div>
             <div class="level">
@@ -103,20 +116,22 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
-                        <p>{{ pourcentageVotes[demande.id]['contre'] }} %</p>
+                        {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
+                            <p>{{ pourcentageVotes[demande.id]['contre'] }} %</p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-
                         <p>Contre <span>{{ countStatus[demande.id]['contre'] }}</span></p>
                     </div>
                 </div>
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
-
-                    <progress class="progress is-danger" value="{{ pourcentageVotes[demande.id]['contre'] }}" max="100"></progress>
+                    {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
+                        <progress class="progress is-danger" value="{{ pourcentageVotes[demande.id]['contre'] }}" max="100"></progress>
+                    {% endif %}
                 </div>
             </div>
 
@@ -126,7 +141,9 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
+                        {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
                         <p>{{ pourcentageVotes[demande.id]['pour'] }} %</p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="level-right">
@@ -137,7 +154,9 @@
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
+                    {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
                     <progress class="progress is-success" value="{{ pourcentageVotes[demande.id]['pour'] }}" max="100"></progress>
+                    {% endif %}
                 </div>
             </div>
 
@@ -147,7 +166,9 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
+                        {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
                         <p>{{ pourcentageVotes[demande.id]['abstention'] }} %</p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="level-right">
@@ -158,7 +179,9 @@
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
+                    {% if (countStatus[demande.id]['pour'] > 0) and (countStatus[demande.id]['contre'] > 0) and (countStatus[demande.id]['abstention']) %}
                     <progress class="progress" value="{{ pourcentageVotes[demande.id]['abstention'] }}" max="100"></progress>
+                    {% endif %}
                 </div>
             </div>
             {% endif %}
@@ -170,11 +193,11 @@
         <div class="column">
             <div class="level has-text-centered">
                 <div class="level-item">
-                    <a class="button is-primary is-outlined">Detail</a>
+                    <a href="{{ path('demandes_show', {'id' : demande.id }) }}" class="button is-primary is-outlined">Detail</a>
                 </div>
 
                 <div class="level-item has-text-centered">
-                    <a class="button is-primary is-outlined">Qui a voté ?</a>
+                    <a href="{{ path('demandes_show', {'id' : demande.id }) }}" class="button is-primary is-outlined">Qui a voté ?</a>
                 </div>
             </div>
         </div>
@@ -185,8 +208,22 @@
 
 
     <button class="button is-link is-outlined is-rounded"> <a href="{{ path('demandes_new') }}">Soumettre une nouvelle demande</a></button>
+
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('main') }}
+    <script>
+
+        const url = window.location.origin + '/demandes/json';
+        let demandesJson;
+
+        async function getDemandes() {
+            const response = await fecth(url);
+            const data = await response.json();
+            const demandesJson = data;
+        }
+        getDemandes();
+        console.log(demandesJson);
+    </script>
 {% endblock %}
 
