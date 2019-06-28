@@ -7,7 +7,7 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">
-                  Titre : {{ demande.titre }}
+                    Titre : {{ demande.titre }}
                 </h1>
                 <h2 class="subtitle">
 
@@ -64,7 +64,7 @@
                     <div class="column">
                         <div class="box">
                             <p>
-                              {{ demande.budget }} €
+                                {{ demande.formatedBudget }} €
                             </p>
                         </div>
                     </div>
@@ -154,26 +154,52 @@
                 </div>
             </div>
         </div>
-{# IF #}
+        {% if not app.user.aVote %}
         <div class="colmuns">
             <div class="column">
                 <h3 class="title is-3 has-text-grey">Je vote</h3>
             </div>
         </div>
         <div class="columns">
+
             <div class="column">
                 <div class="columns">
                     <div class="column">
                         <div class="box">
                             <div class="buttons has-addons is-centered">
-
+                                <div class="field is-grouped">
+                                    <div class="column">
+                                        <p class="control">
+                                            <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Pour'}) }}"
+                                               class="button is-link">
+                                                Pour
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="column">
+                                        <p class="control">
+                                            <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Abstention'}) }}"
+                                               class="button">
+                                                Abstention
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="column">
+                                        <p class="control">
+                                            <a href="{{ path("vote_avote", {'id' : demande.id, 'vote':'Contre'}) }}"
+                                               class="button is-danger">
+                                                Contre
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-{# ELSE#}
+       {% else %}
         <div class="colmuns">
             <div class="column">
                 <h3 class="title is-3 has-text-grey">Mon vote</h3>
@@ -185,7 +211,7 @@
                     <div class="column">
                         <div class="box">
                             <div class="buttons has-addons is-centered">
-                                <span class="button">Neutre</span>
+                                <span class="button">{{ demande.votes.get('etat') }}</span>
                             </div>
                         </div>
                     </div>
@@ -194,6 +220,7 @@
         </div>
 
     </div>
+    {% endif %}
 
 
 {% endblock %}

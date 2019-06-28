@@ -115,9 +115,6 @@ class DemandesController extends AbstractController
     }
 
 
-
-
-
     /**
      * @Route("/new", name="demandes_new", methods={"GET","POST"})
      */
@@ -127,8 +124,9 @@ class DemandesController extends AbstractController
         $form = $this->createForm(DemandesType::class, $demande);
 
         $form->handleRequest($request);
-
+//
         if ($form->isSubmitted() && $form->isValid()) {
+
             $demande->setCreatedAt(new DateTime());
             $now = new DateTime();
             $demande->setDeadline($now->add(new DateInterval('P1M')));
@@ -137,16 +135,19 @@ class DemandesController extends AbstractController
 
             $demande->setCreateur($this->getUser());
 
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->persist($demande);
             $entityManager->flush();
 
-            return $this->redirectToRoute('demandes_index');
+            $this->addFlash('success', 'Votre demande a été soumise pour validation');
+            return $this->redirectToRoute('demandes_ouvertes');
         }
 
         return $this->render('demandes/new.html.twig', [
             'demande' => $demande,
+            'categories' => $this->categories,
             'form' => $form->createView(),
         ]);
     }
