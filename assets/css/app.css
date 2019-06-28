@@ -11,9 +11,31 @@ body {
 .addEventButt {
     position: fixed;
     /* Fixed/sticky position */
-    bottom: 50px;
+    bottom: 100px;
     /* Place the button at the bottom of the page */
-    right: 0px;
+    right: -20px;
+    /* Place the button 30px from the right */
+    z-index: 99;
+    /* Make sure it does not overlap */
+    border: none;
+    /* Remove borders */
+    outline: none;
+    /* Remove outline */
+    cursor: pointer;
+    /* Add a mouse pointer on hover */
+    padding: 20px;
+    /* Some padding */
+    border-radius: 35px;
+    /* Rounded corners */
+    background-color: #fb3;
+}
+
+.listEventButt {
+    position: fixed;
+    /* Fixed/sticky position */
+    bottom: 100px;
+    /* Place the button at the bottom of the page */
+    left: 20px;
     /* Place the button 30px from the right */
     z-index: 99;
     /* Make sure it does not overlap */

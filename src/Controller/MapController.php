@@ -57,7 +57,7 @@ class MapController extends AbstractController
             $message = (new Swift_Message('Un nouveau ' . $problem->getType() . ' a été signalé'))
                 ->setFrom('mariner.connor@gmail.com')
                 ->setTo('mariner.connor@gmail.com')
-                ->setBody('Un nouveau ' . $problem->getType() . ' a été signalé à l\'adresse suivante: <p>' . $problem->getAddress() .'</p><p>' . $problem->getZipCode() . ' ' . $problem->getCity() . '</p>')
+                ->setBody('Un nouveau ' . $problem->getType() . ' a été signalé à l\'adresse suivante: ' . $problem->getAddress() .' ' . $problem->getZipCode() . ' ' . $problem->getCity())
             ;
             $mailer->send($message);
 
