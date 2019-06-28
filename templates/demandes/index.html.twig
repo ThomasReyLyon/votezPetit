@@ -38,8 +38,11 @@
 {# end search #}
         </div>
     </div>
-
-
+<br>
+  <div>
+  <button class="button is-link is-outlined is-rounded"> <a href="{{ path('demandes_new') }}">Soumettre une nouvelle demande</a></button>
+  <button class="button is-link is-outlined is-rounded is-danger"> <a href="{{ path('map') }}">Signaler un problème</a></button>
+  </div>
 
     <!-- TABS -->
     <div class="tabs is-toggle is-fullwidth">
@@ -207,9 +210,7 @@
 </div>
 
 
-    <button class="button is-link is-outlined is-rounded"> <a href="{{ path('demandes_new') }}">Soumettre une nouvelle demande</a></button>
-
-{% endblock %}
+ {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('main') }}
     <script>
