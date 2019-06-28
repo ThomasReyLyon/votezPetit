@@ -76,7 +76,7 @@
                     <p>{{ demande.titre }}</p>
             </div>
                 <div class="level has-text-grey">
-                    <p>Cree le {{ demande.createdAt|date("d/m/Y") }}</p>
+                    <p>Crée le {{ demande.createdAt|date("d/m/Y") }}</p>
                 </div>
 
             <div class="level">
@@ -92,7 +92,7 @@
             </div>
             <div class="level">
                 <div class="level-item">
-                    <p class="has-text-weight-bold">{{ demande.budget }}€</p>
+                    <p class="has-text-weight-bold">{{ demande.formatedBudget }}€</p>
                 </div>
             </div>
             <div class="level">
@@ -198,6 +198,7 @@
 
 
     <button class="button is-link is-outlined is-rounded"> <a href="{{ path('demandes_new') }}">Soumettre une nouvelle demande</a></button>
+
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('main') }}
