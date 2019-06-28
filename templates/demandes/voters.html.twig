@@ -5,7 +5,8 @@
 {% block body %}
 <div class="container">
     <div class="level">
-        <a href="{{ path('demandes_show', {'id' : demande.id }) }}" class="button">Voir la demande</a>
+        <a href="{{ path('demandes_show', {'id' : demande.id }) }}" class="button is-primary">Voir la demande</a>
+        <a href="{{ path('demandes_ouvertes') }}" class="button is-primary">liste des demandes</a>
     </div>
     <div class="columns">
         <div class="column">
