@@ -90,7 +90,7 @@ class VoteService
     }
 
     /**
-     * Retourn les demandes qui ont counnus un succes ou a contrarion celles qui ont subit un echec selon la valeur du bool $forSuccessed
+     * Retourn les demandes qui ont counnus un succes ou a contrario celles qui ont subit un echec selon la valeur du bool $forSuccessed
      * @param array $demandes
      * @param $forSuccessed
      * @return array

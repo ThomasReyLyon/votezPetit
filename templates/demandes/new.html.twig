@@ -3,9 +3,66 @@
 {% block title %}New Demandes{% endblock %}
 
 {% block body %}
-    <h1>Create new Demandes</h1>
 
-    {{ include('demandes/_form.html.twig') }}
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Nouvelle demande
+                </h1>
+            </div>
+        </div>
+    </section>
 
-    <a href="{{ path('demandes_index') }}">back to list</a>
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <form method="post">
+                    <div class="field">
+                        <div class="control">
+                            <input id="demandes_titre" name="demandes[titre]" required="required"
+                                   maxlength="255" class="input" type="text" placeholder="Titre">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input id="demandes_sommaire" name="demandes[sommaire]" required="required"
+                                   maxlength="255" class="input" type="text" placeholder="Sommaire">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <textarea class="textarea" name="demandes[titre]" required="required"
+                                      maxlength="255" placeholder="Description"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" name="demandes[budget]" type="text" placeholder="Normal input">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <div class="select">
+                                <select name="demandes[categorie]">
+                                    {% for categorie in categories %}
+                                    <option value="{{ categorie.nom }}">{{ categorie.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button type="submit" class="button is-primary">Valider</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
