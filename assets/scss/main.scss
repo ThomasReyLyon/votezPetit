@@ -51,3 +51,9 @@ body {
 select {
   color: #7a7a7a !important;
 }
+.tabs.is-toggle li.is-active a {
+  border-color: #7a7a7a !important;
+}
+.tabs.is-toggle {
+  margin-left: 0.5rem;
+}

@@ -17,7 +17,7 @@ class CitoyenFixtures extends BaseFixtures
 
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Citoyen::class, 2000, function(Citoyen $citoyen, $i) {
+        $this->createMany(Citoyen::class, 1000, function(Citoyen $citoyen, $i) {
             if($i === 0){
                 $citoyen->setRoles(['ROLE_MAIRE']);
                 $citoyen->setNom('PETIT');

@@ -3,6 +3,7 @@
 {% block title %}Demandes index{% endblock %}
 
 {% block body %}
+
 <div class="container is-fluid has-text-white">
     <div class="level-item">
         <div class="field has-addons">
@@ -10,7 +11,9 @@
                 <div class="select is-medium is-primary">
                     <select>
                         <option>CATEGORY</option>
-                        <option>With options</option>
+                        {% for categorie in categories %}
+                            <option>{{ categorie.nom }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -26,32 +29,21 @@
     </div>
 
     <!-- TABS -->
-    <div class="tabs is-boxed is-fullwidth">
-        <ul>
-            <li class="is-active">
-                <a style="background-color: #F9F9F9">
-                    <span class="has-text-grey has-text-weight-bold">Ouvertes</span>
-                </a>
+    <div class="tabs is-toggle is-fullwidth">
+            <li class="{% if app.request.get('_route') == 'demandes_ouvertes' %}is-active{% endif %}">
+                <a href="{{ path('demandes_ouvertes') }}" class="has-text-grey has-text-weight-bold" style="background-color: #F9F9F9">Ouvertes</a>
             </li>
-            <li>
-                <a style="background-color: #F9F9F9">
-                    <span class="has-text-grey has-text-weight-bold">Terminées</span>
-                </a>
+            <li class="{% if app.request.get('_route') == 'demandes_terminees' %}is-active{% endif %}">
+                <a href="{{ path('demandes_terminees') }}" class="has-text-grey has-text-weight-bold" style="background-color: #F9F9F9">Terminées</a>
             </li>
-            <li>
-                <a style="background-color: #F9F9F9">
-                    <span class="has-text-grey has-text-weight-bold">Completées</span>
-                </a>
+            <li class="{% if app.request.get('demandes_validees') == 'current_route' %}is-active{% endif %}">
+                <a href="{{ path('demandes_validees') }}" class="has-text-grey has-text-weight-bold" style="background-color: #F9F9F9">Completées</a>
             </li>
-            <li>
-                <a style="background-color: #F9F9F9">
-                    <span class="has-text-grey has-text-weight-bold">Rejetées</span>
-                </a>
+            <li class="{% if app.request.get('demandes_rejetees') == 'current_route' %}is-active{% endif %}">
+                <a href="{{ path('demandes_rejetees') }}" class="has-text-grey has-text-weight-bold" style="background-color: #F9F9F9">Rejetées</a>
             </li>
-            <li>
-                <a style="background-color: #F9F9F9">
-                    <span class="has-text-grey has-text-weight-bold">Annulées</span>
-                </a>
+            <li class="{% if app.request.get('_route') == 'demandes_annulees' %}is-active{% endif %}">
+                <a href="{{ path('demandes_annulees') }}" class="has-text-grey has-text-weight-bold" style="background-color: #F9F9F9">Annulée</a>
             </li>
         </ul>
     </div>
@@ -64,7 +56,7 @@
         <div class="column">
             <div class="level">
                 <div class="level-left">
-                    <span class="tag is-primary"></span>
+                    <span class="tag is-primary">{{ demande.categorie.nom }}</span>
                 </div>
             </div>
             <div class="level has-text-weight-semibold">
@@ -104,24 +96,27 @@
         </div>
 {# Block right #}
         <div class="column">
+            {% if app.request.get('_route') != 'demandes_annulees' %}
             <div class="level">
                 <div class="level-left">
                     <div class="level-item">
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
-                        <p>38 %</p>
+                        <p>{{ pourcentageVotes[demande.id]['contre'] }} %</p>
                     </div>
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p>Contre <span>988 050</span></p>
+
+                        <p>Contre <span>{{ countStatus[demande.id]['contre'] }}</span></p>
                     </div>
                 </div>
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
-                    <progress class="progress is-danger" value="15" max="100">15%</progress>
+
+                    <progress class="progress is-danger" value="{{ pourcentageVotes[demande.id]['contre'] }}" max="100"></progress>
                 </div>
             </div>
 
@@ -131,18 +126,18 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
-                        <p>38 %</p>
+                        <p>{{ pourcentageVotes[demande.id]['pour'] }} %</p>
                     </div>
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p>Pour <span>988 050</span></p>
+                        <p>Pour <span>{{ countStatus[demande.id]['pour'] }}</span></p>
                     </div>
                 </div>
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
-                    <progress class="progress is-success" value="15" max="100">15%</progress>
+                    <progress class="progress is-success" value="{{ pourcentageVotes[demande.id]['pour'] }}" max="100"></progress>
                 </div>
             </div>
 
@@ -152,20 +147,21 @@
                     <span class="icon">
                       <i class="fas fa-home"></i>
                     </span>
-                        <p>38 %</p>
+                        <p>{{ pourcentageVotes[demande.id]['abstention'] }} %</p>
                     </div>
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p>Neutre <span>988 050</span></p>
+                        <p>Abstention <span>{{ countStatus[demande.id]['abstention'] }}</span></p>
                     </div>
                 </div>
             </div>
             <div class="level">
                 <div class="level-item -mt-1">
-                    <progress class="progress" value="15" max="100">15%</progress>
+                    <progress class="progress" value="{{ pourcentageVotes[demande.id]['abstention'] }}" max="100"></progress>
                 </div>
             </div>
+            {% endif %}
         </div>
 {# End right #}
     </div>
