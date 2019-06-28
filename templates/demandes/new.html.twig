@@ -3,9 +3,64 @@
 {% block title %}New Demandes{% endblock %}
 
 {% block body %}
-    <h1>Create new Demandes</h1>
 
-    {{ include('demandes/_form.html.twig') }}
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Nouvelle demande
+                </h1>
+            </div>
+        </div>
+    </section>
 
-    <a href="{{ path('demandes_index') }}">back to list</a>
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                {{ form_start(form) }}
+                    <div class="field">
+                        <div class="control">
+                            {{ form_widget(form.titre) }}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            {{ form_widget(form.sommaire) }}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            {{ form_widget(form.contenu) }}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            {{ form_widget(form.budget) }}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <div class="select">
+                                {{ form_row(form.categorie) }}
+                                {#
+                                <select name="demandes[categorie]">
+                                        <option value="{{ categorie.nom }}">{{ categorie.nom }}</option>
+                                </select>
+                                #}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button type="submit" class="button is-primary">Valider</button>
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
