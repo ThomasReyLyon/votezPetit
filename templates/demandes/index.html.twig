@@ -17,16 +17,29 @@
                     </select>
                 </div>
             </div>
+
+
+{# Search bar #}
+
             <p class="control">
-                <input class="input is-medium w-large is-primary" type="text" placeholder="Find a post">
+                <input class="input is-medium w-large is-primary" type="text" placeholder="Find a post" list="demandes">
+                {#
+                <datalist id="demandes">
+                    <option value="Kronenbourg">
+                    <option value="Grimbergen">
+                </datalist>
+                 #}
             </p>
             <p class="control">
                 <button class="button is-medium is-primary">
                     SEARCH
                 </button>
             </p>
+{# end search #}
         </div>
     </div>
+
+
 
     <!-- TABS -->
     <div class="tabs is-toggle is-fullwidth">
@@ -170,11 +183,11 @@
         <div class="column">
             <div class="level has-text-centered">
                 <div class="level-item">
-                    <a class="button is-primary is-outlined">Detail</a>
+                    <a href="{{ path('demandes_show', {'id' : demande.id }) }}" class="button is-primary is-outlined">Detail</a>
                 </div>
 
                 <div class="level-item has-text-centered">
-                    <a class="button is-primary is-outlined">Qui a voté ?</a>
+                    <a href="{{ path('demandes_show', {'id' : demande.id }) }}" class="button is-primary is-outlined">Qui a voté ?</a>
                 </div>
             </div>
         </div>
@@ -188,5 +201,18 @@
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('main') }}
+    <script>
+
+        const url = window.location.origin + '/demandes/json';
+        let demandesJson;
+
+        async function getDemandes() {
+            const response = await fecth(url);
+            const data = await response.json();
+            const demandesJson = data;
+        }
+        getDemandes();
+        console.log(demandesJson);
+    </script>
 {% endblock %}
 

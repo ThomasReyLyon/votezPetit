@@ -1,7 +1,5 @@
 // MODAL
 
-document.addEventListener('DOMContentLoaded', () => {
-});
 let btnmodal = document.getElementById('btnmodal');
 let modal = document.getElementById('modal')
 let closeModal = document.getElementById('closeModal')
@@ -16,3 +14,4 @@ closeModal.addEventListener('click', function(){
 cancel.addEventListener('click', function(){
     modal.classList.remove('is-active')
 })
+
