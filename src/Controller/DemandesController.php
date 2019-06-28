@@ -20,38 +20,100 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use App\Repository\CategoriesRepository;
 
 /**
  * @Route("/demandes")
  */
 class DemandesController extends AbstractController
 {
+    private $categories;
+
+    public function __construct(CategoriesRepository $categoriesRepository)
+    {
+        $this->categories = $categoriesRepository->findAll();
+    }
+
     /**
      * @Route("/ouvertes", name="demandes_ouvertes", methods={"GET"})
      */
-    public function ouvertes(DemandesRepository $demandesRepository, VoteRepository $voteRepo, VoteService $voteService): Response
+    public function ouvertes(DemandesRepository $demandesRepository, VoteService $voteService): Response
     {
         $demandes = $demandesRepository->findBy(['isOuverte' => 'True']);
-
-        $countStatus = $voteService->countVote();
-        $pourcentageVotes = $voteService->pourcentageVote();
+        $countStatus = $voteService->countVote($demandes);
+        $pourcentageVotes = $voteService->pourcentageVote($demandes);
 
         return $this->render('demandes/index.html.twig', [
             'demandes' => $demandes,
             'countStatus'=> $countStatus,
-            'pourcentageVotes' => $pourcentageVotes
+            'pourcentageVotes' => $pourcentageVotes,
+            'categories' => $this->categories
         ]);
     }
 
     /**
      * @Route("/validees", name="demandes_validees", methods={"GET"})
      */
-    public function validees(DemandesRepository $demandesRepository): Response
+    public function validees(DemandesRepository $demandesRepository, VoteService $voteService): Response
     {
+        $demandes = $demandesRepository->findBy(['isOuverte' => true, 'isValide' => true]);
+        $successed = $voteService->isSuccessed($demandes, true);
+        $countStatus = $voteService->countVote($demandes);
+        $pourcentageVotes = $voteService->pourcentageVote($demandes);
         return $this->render('demandes/index.html.twig', [
-            'demandes' => $demandesRepository->findAll(),
+            'demandes' => $successed,
+            'countStatus'=> $countStatus,
+            'pourcentageVotes' => $pourcentageVotes,
+            'categories' => $this->categories
         ]);
     }
+
+    /**
+     * @Route("/rejetees", name="demandes_rejetees", methods={"GET"})
+     */
+    public function rejetees(DemandesRepository $demandesRepository, VoteService $voteService): Response
+    {
+        $demandes = $demandesRepository->findBy(['isOuverte' => true, 'isValide' => true]);
+        $failed = $voteService->isSuccessed($demandes, false);
+        $countStatus = $voteService->countVote($demandes);
+        $pourcentageVotes = $voteService->pourcentageVote($demandes);
+        return $this->render('demandes/index.html.twig', [
+            'demandes' => $failed,
+            'countStatus'=> $countStatus,
+            'pourcentageVotes' => $pourcentageVotes,
+            'categories' => $this->categories
+        ]);
+    }
+
+    /**
+     * @Route("/terminees", name="demandes_terminees", methods={"GET"})
+     */
+    public function terminees(DemandesRepository $demandesRepository, VoteService $voteService): Response
+    {
+        $demandes = $demandesRepository->findBy(['isOuverte' => false, 'isValide' => true]);
+        $countStatus = $voteService->countVote($demandes);
+        $pourcentageVotes = $voteService->pourcentageVote($demandes);
+
+        return $this->render('demandes/index.html.twig', [
+            'demandes' => $demandes,
+            'countStatus'=> $countStatus,
+            'pourcentageVotes' => $pourcentageVotes,
+            'categories' => $this->categories
+        ]);
+    }
+// TODO : La Vue annulee
+    /**
+     * @Route("/annulees", name="demandes_annulees", methods={"GET"})
+     */
+    public function annulees(DemandesRepository $demandesRepository): Response
+    {
+        return $this->render('demandes/index.html.twig', [
+            'demandes' => $demandesRepository->findBy(['isValide' => false]),
+        ]);
+    }
+
+
+
 
 
     /**

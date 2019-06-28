@@ -10,6 +10,8 @@ use App\Entity\Vote;
 use App\Repository\DemandesRepository;
 use App\Repository\VoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Boolean;
+use PhpParser\Node\Expr\Array_;
 
 class VoteService
 {
@@ -55,9 +57,7 @@ class VoteService
 
 	}
 
-	public function countVote(){
-
-		$demandes = $this->demandesRepository->findAll();
+	public function countVote($demandes){
 
 		$votesCount = [];
 
@@ -78,8 +78,8 @@ class VoteService
     /**
      * @return array
      */
-	public function pourcentageVote() {
-        $votesCount = $this->countVote();
+	public function pourcentageVote($demandes) {
+        $votesCount = $this->countVote($demandes);
         $pourcentages = [];
         foreach ($votesCount as $id => $demande) {
             $pourcentages[$id]['pour'] = round(($demande['pour'] / array_sum($votesCount[$id])) * 100,2);
@@ -87,6 +87,35 @@ class VoteService
             $pourcentages[$id]['abstention'] = round(($demande['abstention'] / array_sum($votesCount[$id])) * 100,2);
         }
         return $pourcentages;
+    }
+
+    /**
+     * Retourn les demandes qui ont counnus un succes ou a contrarion celles qui ont subit un echec selon la valeur du bool $forSuccessed
+     * @param array $demandes
+     * @param $forSuccessed
+     * @return array
+     */
+    public function isSuccessed(Array $demandes, $forSuccessed){
+
+        $pourcentages = $this->countVote($demandes);
+
+        foreach ($pourcentages as $key => $arrPourcentage) {
+            if($arrPourcentage['pour'] > $arrPourcentage['contre']) {
+                $winKeys[] = $key;
+            }
+        }
+        foreach ($demandes as $object) {
+            if (in_array($object->getId(), $winKeys, true)) {
+                $win[] = $object;
+            } else {
+                $failed[] = $object;
+            }
+        }
+
+        if ($forSuccessed === true) {
+            return $win;
+        }
+        return $failed;
     }
 
 }
