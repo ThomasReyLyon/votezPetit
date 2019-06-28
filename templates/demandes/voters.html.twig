@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demandes index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="level">
+        <a href="{{ path('demandes_show', {'id' : demande.id }) }}" class="button is-primary">Voir la demande</a>
+        <a href="{{ path('demandes_ouvertes') }}" class="button is-primary">liste des demandes</a>
+    </div>
+    <div class="columns">
+        <div class="column">
+            <table class="table is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Vote</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for voteur in voteurs %}
+                    <tr>
+                        <td>{{ voteur.nom }}</td>
+                        <td>{{ voteur.prenom }}</td>
+                        <td>{{ voteur.etat }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
